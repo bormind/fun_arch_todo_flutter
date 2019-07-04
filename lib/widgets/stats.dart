@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redurx_light_starter/flutter_todos_keys.dart';
-import 'package:redurx_light_starter/store/app_store.dart';
+import 'package:redurx_light_starter/models/stats_state.dart';
+import 'package:redurx_light_starter/store/connect_state.dart';
 import 'package:redurx_light_starter/widgets/loading_indicator.dart';
 import 'package:todos_app_core/todos_app_core.dart';
+import 'package:redurx_light_starter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
   Stats({Key key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    if (AppStore.state.isStatsLoading) {
-      return LoadingIndicator(key: FlutterTodosKeys.statsLoadingIndicator);
-    }
-
+  Widget _renderStatsData(BuildContext context, StatsData statsData) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +26,7 @@ class Stats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              '${AppStore.state.stats.numCompleted}',
+              '${statsData.numCompleted}',
               key: ArchSampleKeys.statsNumCompleted,
               style: Theme.of(context).textTheme.subhead,
             ),
@@ -44,13 +41,28 @@ class Stats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              "${AppStore.state.stats.numActive}",
+              "${statsData.numActive}",
               key: ArchSampleKeys.statsNumActive,
               style: Theme.of(context).textTheme.subhead,
             ),
           )
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ConnectState<StatsState>(
+      map: (state) => state.stats,
+      where: notIdentical,
+      builder: (stats) {
+        return stats.isLoading
+            ? LoadingIndicator(key: FlutterTodosKeys.statsLoadingIndicator)
+            : stats.statsData
+                .map((statsData) => _renderStatsData(context, statsData))
+                .orElse(SizedBox());
+      },
     );
   }
 }
