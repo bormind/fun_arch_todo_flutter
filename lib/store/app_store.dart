@@ -22,21 +22,19 @@ class _Store {
 }
 
 class AppStore {
-  static _Store _store;
+  final _Store _store;
 
-  static Observable<AppState> get state$ {
+  AppStore(AppState initialState) : _store = _Store(initialState);
+
+  Observable<AppState> get state$ {
     return _store.subject;
   }
 
-  static AppState get state {
+  AppState get state {
     return _store.state;
   }
 
-  static void init(AppState initialState) {
-    _store = _Store(initialState);
-  }
-
-  static void dispatch(AppAction action) {
+  void dispatch(AppAction action) {
     _store.dispatch(action);
   }
 }

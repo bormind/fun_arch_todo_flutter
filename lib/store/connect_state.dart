@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:redurx_light_starter/env.dart';
 import 'package:redurx_light_starter/models/app_state.dart';
-import 'package:redurx_light_starter/store/app_store.dart';
 
 class ConnectState<T> extends StatelessWidget {
   final T Function(AppState state) map;
@@ -17,7 +17,7 @@ class ConnectState<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
-      stream: AppStore.state$
+      stream: store.state$
           .map(map)
           .distinct((T prev, T next) => !where(prev, next)),
       builder: (context, snapshot) {

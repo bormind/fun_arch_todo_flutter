@@ -54,7 +54,7 @@ class Stats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConnectState<StatsState>(
-      map: (state) => state.stats,
+      map: (state) => state.statsState,
       where: notIdentical,
       builder: (stats) {
         return stats.isLoading

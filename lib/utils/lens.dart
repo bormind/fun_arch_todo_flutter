@@ -32,20 +32,18 @@ class CombinedLens<A, B, C> extends ILens<A, C> {
   A set(A a, C c) => l1.set(a, l2.set(l1.get(a), c));
 }
 
-class ListLens<A> extends ILens<List<A>, A> {
-  final bool Function(A item) _match;
+class ListIndexLens<A> extends ILens<List<A>, A> {
+  final int index;
 
-  ListLens(
-    this._match,
-  );
+  ListIndexLens(this.index);
 
   @override
   A get(List<A> list) {
-    return list.firstWhere(_match, orElse: null);
+    return list[index];
   }
 
   @override
-  List<A> set(List<A> list, A b) {
-    return list.map((item) => _match(item) ? b : item);
+  List<A> set(List<A> list, A item) {
+    return List.from(list)..[index] = item;
   }
 }

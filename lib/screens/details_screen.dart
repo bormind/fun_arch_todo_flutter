@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:redurx_light_starter/env.dart';
 import 'package:redurx_light_starter/flutter_todos_keys.dart';
 import 'package:redurx_light_starter/models/todo.dart';
 import 'package:redurx_light_starter/screens/add_edit_screen.dart';
 import 'package:redurx_light_starter/store/actions.dart';
-import 'package:redurx_light_starter/store/app_store.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
             key: ArchSampleKeys.deleteTodoButton,
             icon: Icon(Icons.delete),
             onPressed: () {
-              AppStore.dispatch(DeleteTodo(todo.id));
+              store.dispatch(DeleteTodo(todo.id));
               Navigator.pop(context, todo);
             },
           )
@@ -43,7 +43,7 @@ class DetailsScreen extends StatelessWidget {
                         child: Checkbox(
                             value: todo.completed,
                             onChanged: (_) {
-                              AppStore.dispatch(
+                              store.dispatch(
                                   MarkCompletion(todo.id, !todo.completed));
                             }),
                       ),
@@ -92,7 +92,7 @@ class DetailsScreen extends StatelessWidget {
                       return AddEditScreen(
                         key: ArchSampleKeys.editTodoScreen,
                         onSave: (task, note) {
-                          AppStore.dispatch(UpdateTodo(todo.id, task, note));
+                          store.dispatch(UpdateTodo(todo.id, task, note));
                         },
                         isEditing: true,
                         todo: todo,

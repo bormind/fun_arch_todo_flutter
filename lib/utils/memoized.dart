@@ -1,29 +1,28 @@
-bool _validateParams(List<Object> oldParams, List<Object> newParams) {
+bool _paramsChanged(List<Object> oldParams, List<Object> newParams) {
   if (oldParams.length != newParams.length) {
-    return false;
+    return true;
   }
 
   for (int i = 0; i < newParams.length; i++) {
     if (oldParams[i] != newParams[i]) {
-      return false;
+      return true;
     }
   }
 
-  return true;
+  return false;
 }
 
 // Calculation with two parameters
-class Memoized2<T, P1, P2> {
-  final T Function(P1 p1, P2 p2) calculate;
+class Memoized2<P1, P2, R> {
+  final R Function(P1 p1, P2 p2) calculate;
 
-  T _value;
+  R _value;
   List<Object> _params = [];
 
   Memoized2(this.calculate);
-
-  T getOrCalculate(P1 p1, P2 p2) {
+  R getOrCalculate(P1 p1, P2 p2) {
     List<Object> newParams = [p1, p2];
-    if (!_validateParams(_params, newParams)) {
+    if (_paramsChanged(_params, newParams)) {
       _value = calculate(p1, p2);
       _params = newParams;
     }

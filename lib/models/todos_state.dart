@@ -4,7 +4,7 @@ import 'package:redurx_light_starter/models/visibility_filter.dart';
 import 'package:redurx_light_starter/utils/lens.dart';
 import 'package:redurx_light_starter/utils/memoized.dart';
 
-Memoized2<List<Todo>, List<Todo>, VisibilityFilter> _visibleTodos =
+Memoized2<List<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
     Memoized2((todos, visibility) {
   if (visibility == VisibilityFilter.all) {
     return todos;

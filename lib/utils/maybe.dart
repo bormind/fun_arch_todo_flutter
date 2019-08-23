@@ -54,6 +54,7 @@ class Maybe<T> {
     } else if (other is Maybe<T>) {
       return (identical(other._value, _value) || other._value == _value);
     } else {
+      assert(false, "wrong type eqality");
       return false;
     }
   }

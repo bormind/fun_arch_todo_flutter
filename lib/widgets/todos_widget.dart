@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:redurx_light_starter/models/todo.dart';
+import 'package:redurx_light_starter/models/todos_state.dart';
 import 'package:redurx_light_starter/screens/details_screen.dart';
 import 'package:redurx_light_starter/store/actions.dart';
-import 'package:redurx_light_starter/store/app_store.dart';
 import 'package:redurx_light_starter/widgets/delete_todo_snack_bar.dart';
 import 'package:redurx_light_starter/widgets/loading_indicator.dart';
 import 'package:redurx_light_starter/widgets/todo_item.dart';
 import 'package:todos_app_core/todos_app_core.dart';
+import 'package:redurx_light_starter/env.dart';
 
-class FilteredTodos extends StatelessWidget {
-  final List<Todo> visibleTodos;
+class TodosWidget extends StatelessWidget {
+  final TodosState todosState;
 
-  FilteredTodos({
-    @required this.visibleTodos,
-    Key key,
-  }) : super(key: key);
+  TodosWidget(this.todosState);
 
   @override
   Widget build(BuildContext context) {
     final localizations = ArchSampleLocalizations.of(context);
-    if (AppStore.state.isLoadingTodos) {
+    if (store.state.todosState.isLoading) {
       return LoadingIndicator(key: ArchSampleKeys.todosLoading);
     }
+
+    final visibleTodos = todosState.visibleTodos;
 
     return ListView.builder(
       key: ArchSampleKeys.todoList,
@@ -33,11 +31,11 @@ class FilteredTodos extends StatelessWidget {
         return TodoItem(
           todo: todo,
           onDismissed: (direction) {
-            AppStore.dispatch(DeleteTodo(todo.id));
+            store.dispatch(DeleteTodo(todo.id));
             Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
               key: ArchSampleKeys.snackbar,
               todo: todo,
-              onUndo: () => AppStore.dispatch(AddTodo(todo)),
+              onUndo: () => store.dispatch(AddTodo(todo)),
               localizations: localizations,
             ));
           },
@@ -51,13 +49,13 @@ class FilteredTodos extends StatelessWidget {
               Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                 key: ArchSampleKeys.snackbar,
                 todo: todo,
-                onUndo: () => AppStore.dispatch(AddTodo(todo)),
+                onUndo: () => store.dispatch(AddTodo(todo)),
                 localizations: localizations,
               ));
             }
           },
           onCheckboxChanged: (_) {
-            AppStore.dispatch(MarkCompletion(todo.id, !todo.completed));
+            store.dispatch(MarkCompletion(todo.id, !todo.completed));
           },
         );
       },

@@ -7,41 +7,41 @@ import 'package:redurx_light_starter/utils/lens.dart';
 @immutable
 class AppState {
   static ILens<AppState, TodosState> todosLens = Lens(
-    (state) => state.todos,
-    (state, todos) => state.copyWith(todos: todos),
+    (state) => state.todosState,
+    (state, todosState) => state.copyWith(todosState: todosState),
   );
 
   static ILens<AppState, StatsState> statsLens = Lens(
-    (state) => state.stats,
-    (state, stats) => state.copyWith(stats: stats),
+    (state) => state.statsState,
+    (state, statsState) => state.copyWith(statsState: statsState),
   );
 
-  final TodosState todos;
-  final StatsState stats;
+  final TodosState todosState;
+  final StatsState statsState;
   final AppTab activeTab;
 
   AppState({
-    @required this.todos,
-    @required this.stats,
+    @required this.todosState,
+    @required this.statsState,
     @required this.activeTab,
   });
 
   AppState copyWith({
-    TodosState todos,
-    StatsState stats,
+    TodosState todosState,
+    StatsState statsState,
     AppTab activeTab,
   }) {
     return AppState(
-      todos: todos ?? this.todos,
-      stats: stats ?? this.stats,
+      todosState: todosState ?? this.todosState,
+      statsState: statsState ?? this.statsState,
       activeTab: activeTab ?? this.activeTab,
     );
   }
 
   factory AppState.initial() {
     return AppState(
-      todos: TodosState.initial(),
-      stats: StatsState.initial(),
+      todosState: TodosState.initial(),
+      statsState: StatsState.initial(),
       activeTab: AppTab.todos,
     );
   }
