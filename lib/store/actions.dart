@@ -6,19 +6,12 @@ import 'package:redurx_light_starter/models/visibility_filter.dart';
 import 'package:redurx_light_starter/store/app_store.dart';
 import 'package:redurx_light_starter/utils/lens.dart';
 
-ILens<AppState, List<Todo>> _todoListLens =
-    AppState.todosLens.combine(TodosState.todoListLens);
+ILens<AppState, Map<String, Todo>> _todosLens =
+    AppState.todosLens.combine(TodosState.todosLens);
 
-AppState _updateTodoItem(
-    AppState state, String itemId, Todo update(Todo item)) {
-  final list = _todoListLens.get(state);
-  final int index = list.indexWhere((item) => item.id == itemId);
-
-  if (index == -1) {
-    return state;
-  }
-
-  return _todoListLens.combine(new ListIndexLens(index)).update(state, update);
+AppState _updateTodo(AppState state, String todoId, Todo update(Todo todo)) {
+  return _todosLens.update(
+      state, (todos) => todos..[todoId] = update(todos[todoId]));
 }
 
 class MarkCompletion implements AppAction {
@@ -29,8 +22,8 @@ class MarkCompletion implements AppAction {
 
   @override
   AppState reduce(AppState state) {
-    return _updateTodoItem(
-        state, todoId, (item) => item.copyWith(completed: isCompleted));
+    return _updateTodo(
+        state, todoId, (todo) => todo.copyWith(completed: isCompleted));
   }
 }
 
@@ -41,8 +34,10 @@ class DeleteTodo implements AppAction {
 
   @override
   AppState reduce(AppState state) {
-    return _todoListLens.set(
-        state, state.todosState.todos.where((item) => item.id != todoId));
+    final todos = _todosLens.get(state);
+    todos.remove(todoId);
+
+    return _todosLens.update(state, (todos) => todos..remove(todoId));
   }
 }
 
@@ -55,7 +50,7 @@ class UpdateTodo implements AppAction {
 
   @override
   AppState reduce(AppState state) {
-    return _updateTodoItem(
+    return _updateTodo(
         state, todoId, (item) => item.copyWith(task: task, note: notes));
   }
 }
@@ -90,24 +85,28 @@ class SetVisibilityFilter implements AppAction {
 class ClearCompleted implements AppAction {
   @override
   AppState reduce(AppState state) {
-    return _todoListLens.set(
-        state, state.todosState.todos.where((td) => !td.completed));
+    return _todosLens.update(
+        state, (todos) => todos..removeWhere((_, todo) => todo.completed));
   }
 }
 
 class CompleteAll implements AppAction {
   @override
   AppState reduce(AppState state) {
-    return _todoListLens.set(
-        state, state.todosState.todos.map((t) => t.copyWith(completed: true)));
+    return _todosLens.update(
+        state,
+        (todos) =>
+            todos..updateAll((_, todo) => todo.copyWith(completed: true)));
   }
 }
 
 class UnCompleteAll implements AppAction {
   @override
   AppState reduce(AppState state) {
-    return _todoListLens.set(
-        state, state.todosState.todos.map((t) => t.copyWith(completed: false)));
+    return _todosLens.update(
+        state,
+        (todos) =>
+            todos..updateAll((_, todo) => todo.copyWith(completed: false)));
   }
 }
 
@@ -118,7 +117,6 @@ class AddTodo implements AppAction {
 
   @override
   AppState reduce(AppState state) {
-    return _todoListLens.set(
-        state, List.from(state.todosState.todos)..add(todo));
+    return _todosLens.update(state, (todos) => todos..[todo.id] = todo);
   }
 }

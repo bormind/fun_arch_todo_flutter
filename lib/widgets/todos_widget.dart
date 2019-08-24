@@ -21,7 +21,7 @@ class TodosWidget extends StatelessWidget {
       return LoadingIndicator(key: ArchSampleKeys.todosLoading);
     }
 
-    final visibleTodos = todosState.visibleTodos;
+    final visibleTodos = todosState.visibleTodos.toList();
 
     return ListView.builder(
       key: ArchSampleKeys.todoList,

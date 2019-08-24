@@ -31,19 +31,3 @@ class CombinedLens<A, B, C> extends ILens<A, C> {
   @override
   A set(A a, C c) => l1.set(a, l2.set(l1.get(a), c));
 }
-
-class ListIndexLens<A> extends ILens<List<A>, A> {
-  final int index;
-
-  ListIndexLens(this.index);
-
-  @override
-  A get(List<A> list) {
-    return list[index];
-  }
-
-  @override
-  List<A> set(List<A> list, A item) {
-    return List.from(list)..[index] = item;
-  }
-}

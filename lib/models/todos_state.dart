@@ -1,7 +1,10 @@
+import 'dart:collection';
+
 import 'package:meta/meta.dart';
 import 'package:redurx_light_starter/models/todo.dart';
 import 'package:redurx_light_starter/models/visibility_filter.dart';
 import 'package:redurx_light_starter/utils/lens.dart';
+import 'package:redurx_light_starter/utils/maybe.dart';
 import 'package:redurx_light_starter/utils/memoized.dart';
 
 Memoized2<List<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
@@ -18,40 +21,49 @@ Memoized2<List<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
 });
 
 class TodosState {
-  static ILens<TodosState, List<Todo>> todoListLens = Lens(
+  static ILens<TodosState, LinkedHashMap<String, Todo>> todosLens = Lens(
     (state) => state.todos,
-    (state, todos) => state.copyWith(todos: todos),
+    (state, todos) => state.copyWith(todos: LinkedHashMap.from(todos)),
   );
 
-  final List<Todo> todos;
+  final Map<String, Todo> todos;
   final VisibilityFilter visibilityFilter;
+  final Maybe<String> selectedTodoId;
   final bool isLoading;
 
   TodosState({
     @required this.todos,
     @required this.visibilityFilter,
+    @required this.selectedTodoId,
     @required this.isLoading,
   });
 
   TodosState copyWith({
-    List<Todo> todos,
+    Map<String, Todo> todos,
     VisibilityFilter visibilityFilter,
+    Maybe<String> selectedTodoId,
     bool isLoadingTodos,
   }) {
     return TodosState(
       todos: todos ?? this.todos,
       visibilityFilter: visibilityFilter ?? this.visibilityFilter,
+      selectedTodoId: selectedTodoId ?? this.selectedTodoId,
       isLoading: isLoading ?? this.isLoading,
     );
   }
 
-  List<Todo> get visibleTodos =>
-      _visibleTodos.getOrCalculate(this.todos, this.visibilityFilter);
+  Iterable<Todo> get visibleTodos =>
+      _visibleTodos.getOrCalculate(this.todos.values, this.visibilityFilter);
+
+  Maybe<Todo> get selectedTodo {
+    return selectedTodoId.map((todoId) => this.todos[todoId]);
+  }
 
   factory TodosState.initial() {
     return TodosState(
-      todos: [],
+      todos: new LinkedHashMap(),
       visibilityFilter: VisibilityFilter.all,
+      selectedTodoId: Maybe.nothing(),
       isLoading: false,
     );
   }
