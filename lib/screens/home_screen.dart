@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:redurx_light_starter/env.dart';
 import 'package:redurx_light_starter/models/app_state.dart';
 import 'package:redurx_light_starter/models/app_tab.dart';
+import 'package:redurx_light_starter/screens/todos_screen.dart';
 import 'package:redurx_light_starter/store/actions.dart';
 import 'package:redurx_light_starter/store/connect_state.dart';
 import 'package:redurx_light_starter/widgets/extra_actions.dart';
 import 'package:redurx_light_starter/widgets/filter_button.dart';
 import 'package:redurx_light_starter/widgets/stats.dart';
 import 'package:redurx_light_starter/widgets/tab_selector.dart';
-import 'package:redurx_light_starter/widgets/todos_widget.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 import 'package:redurx_light_starter/utils/utils.dart';
 
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         body: state.activeTab == AppTab.todos
-            ? TodosWidget(state.todosState)
+            ? TodosScreen(state.todosState)
             : Stats(),
         floatingActionButton: FloatingActionButton(
           key: ArchSampleKeys.addTodoFab,

@@ -5,6 +5,7 @@ import 'package:redurx_light_starter/models/todos_state.dart';
 import 'package:redurx_light_starter/models/visibility_filter.dart';
 import 'package:redurx_light_starter/store/app_store.dart';
 import 'package:redurx_light_starter/utils/lens.dart';
+import 'package:redurx_light_starter/utils/maybe.dart';
 
 ILens<AppState, Map<String, Todo>> _todosLens =
     AppState.todosLens.combine(TodosState.todosLens);
@@ -118,5 +119,25 @@ class AddTodo implements AppAction {
   @override
   AppState reduce(AppState state) {
     return _todosLens.update(state, (todos) => todos..[todo.id] = todo);
+  }
+}
+
+class SelectTodo implements AppAction {
+  final String todoId;
+
+  SelectTodo(this.todoId);
+
+  @override
+  AppState reduce(AppState state) {
+    return AppState.todosLens.update(
+        state, (todos) => todos.copyWith(selectedTodoId: Maybe(todoId)));
+  }
+}
+
+class ClearTodoSelection implements AppAction {
+  @override
+  AppState reduce(AppState state) {
+    return AppState.todosLens.update(
+        state, (todos) => todos.copyWith(selectedTodoId: Maybe.nothing()));
   }
 }

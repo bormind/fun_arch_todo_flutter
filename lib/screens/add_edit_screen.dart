@@ -1,20 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:redurx_light_starter/models/todo.dart';
+import 'package:redurx_light_starter/utils/maybe.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 typedef OnSaveCallback = Function(String task, String note);
 
 class AddEditScreen extends StatefulWidget {
-  final bool isEditing;
+  final Maybe<Todo> todo;
   final OnSaveCallback onSave;
-  final Todo todo;
 
   AddEditScreen({
     Key key,
+    @required this.todo,
     @required this.onSave,
-    @required this.isEditing,
-    this.todo,
   }) : super(key: key ?? ArchSampleKeys.addTodoScreen);
 
   @override
@@ -27,7 +26,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
   String _task;
   String _note;
 
-  bool get isEditing => widget.isEditing;
+  bool get isEditing => widget.todo.hasValue;
+
+  @override
+  void initState() {
+    _task = widget.todo.map((t) => t.task).orElse("");
+    _note = widget.todo.map((t) => t.note).orElse("");
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +54,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
           child: ListView(
             children: [
               TextFormField(
-                initialValue: isEditing ? widget.todo.task : '',
+                initialValue: _task,
                 key: ArchSampleKeys.taskField,
                 autofocus: !isEditing,
                 style: textTheme.headline,
@@ -62,7 +69,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 onSaved: (value) => _task = value,
               ),
               TextFormField(
-                initialValue: isEditing ? widget.todo.note : '',
+                initialValue: _note,
                 key: ArchSampleKeys.noteField,
                 maxLines: 10,
                 style: textTheme.subhead,

@@ -9,10 +9,10 @@ import 'package:redurx_light_starter/widgets/todo_item.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 import 'package:redurx_light_starter/env.dart';
 
-class TodosWidget extends StatelessWidget {
+class TodosScreen extends StatelessWidget {
   final TodosState todosState;
 
-  TodosWidget(this.todosState);
+  TodosScreen(this.todosState);
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +40,15 @@ class TodosWidget extends StatelessWidget {
             ));
           },
           onTap: () async {
+            store.dispatch(SelectTodo(todo.id));
+
             final removedTodo = await Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) {
-                return DetailsScreen(todo);
-              }),
+              MaterialPageRoute(builder: (_) => DetailsScreen()),
             );
+
+            print(">>> Cleared todo selection");
+            store.dispatch(ClearTodoSelection());
+
             if (removedTodo != null) {
               Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                 key: ArchSampleKeys.snackbar,
