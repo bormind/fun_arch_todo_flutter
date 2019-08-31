@@ -26,7 +26,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
   String _task;
   String _note;
 
-  bool get isEditing => widget.todo.hasValue;
+  bool get isEditing => widget.todo.inSome;
 
   @override
   void initState() {

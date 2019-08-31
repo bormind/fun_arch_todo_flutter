@@ -33,7 +33,7 @@ class StatsState {
 
   factory StatsState.initial() {
     return StatsState(
-      statsData: Maybe.nothing(),
+      statsData: Maybe.none(),
       isLoading: false,
     );
   }

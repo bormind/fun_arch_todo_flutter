@@ -1,58 +1,56 @@
 import 'package:meta/meta.dart';
 
-class Maybe<T> {
-  final T _value;
-
-  Maybe._(this._value);
-
-  Maybe.nothing() : _value = null;
-
-  factory Maybe(T value) {
-    return Maybe._(value);
+abstract class Maybe<T> {
+  factory Maybe.none() {
+    return _None<T>();
   }
 
-  T get value {
-    if (_value == null) {
-      throw Exception("Value does not exists");
+  factory Maybe.some(T value) {
+    if (value == null) {
+      throw ArgumentError("Value can't be null");
     }
 
-    return _value;
+    return _Some(value);
   }
+
+  factory Maybe.maybe(T value) {
+    return value == null ? _None() : _Some(value);
+  }
+
+  T get value;
+  Maybe<R> map<R>(R mapper(T t));
+  T orElse(T defVal);
+  Maybe<R> flatMap<R>(Maybe<R> mapper(T t));
+
+  bool get inSome;
+  bool get isNone;
+}
+
+class _Some<T> implements Maybe<T> {
+  final T _value;
+
+  _Some(this._value);
+
+  T get value => _value;
+  T orElse(T defVal) => _value;
 
   Maybe<R> map<R>(R mapper(T t)) {
-    return _value == null ? Maybe(null) : Maybe(mapper(_value));
-  }
-
-  R mapOrElse<R>(R mapper(T t), {@required R orElse}) {
-    return _value == null ? orElse : mapper(_value);
-  }
-
-  Future<Maybe<R>> mapAsync<R>(Future<R> mapper(T t)) {
-    return _value == null
-        ? Future.value(Maybe(null))
-        : mapper(_value).then((r) => Maybe(r));
-  }
-
-  Future<R> mapOrElseAsync<R>(Future<R> mapper(T t), {@required R orElse}) {
-    return _value == null ? Future.value(orElse) : mapper(_value);
+    return Maybe.maybe(mapper(_value));
   }
 
   Maybe<R> flatMap<R>(Maybe<R> mapper(T t)) {
-    if (_value == null) {
-      return Maybe(null);
-    }
-
     return mapper(_value);
   }
 
-  bool get hasValue => _value != null;
+  bool get inSome => true;
+  bool get isNone => false;
 
   @override
   bool operator ==(Object other) {
     if (other is T) {
       return this._value == other;
-    } else if (other is Maybe<T>) {
-      return (identical(other._value, _value) || other._value == _value);
+    } else if (other is _Some<T>) {
+      return other._value == _value;
     } else {
       assert(false, "wrong type eqality");
       return false;
@@ -61,15 +59,52 @@ class Maybe<T> {
 
   @override
   int get hashCode {
-    return this.map((t) => t.hashCode).orElse(null);
-  }
-
-  T orElse(T defVal) {
-    return _value ?? defVal;
+    return _value.hashCode;
   }
 
   @override
   String toString() {
-    return hasValue ? "Just($_value)" : "Nothing";
+    return "Some($_value)";
+  }
+}
+
+class _None<T> implements Maybe<T> {
+  T get value {
+    throw Exception("Value does not exists");
+  }
+
+  T orElse(T defVal) => defVal;
+
+  Maybe<R> map<R>(R mapper(T t)) {
+    return Maybe.none();
+  }
+
+  Maybe<R> flatMap<R>(Maybe<R> mapper(T t)) {
+    return Maybe.none();
+  }
+
+  bool get inSome => false;
+  bool get isNone => true;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is T) {
+      return other == null;
+    } else if (other is _None<T>) {
+      return true;
+    } else {
+      assert(false, "wrong type eqality");
+      return false;
+    }
+  }
+
+  @override
+  int get hashCode {
+    return null;
+  }
+
+  @override
+  String toString() {
+    return "None";
   }
 }

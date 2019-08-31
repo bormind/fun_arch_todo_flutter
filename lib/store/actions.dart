@@ -57,9 +57,9 @@ ActionFunction addTodo(Todo todo) => _todosLens.update(
     );
 
 ActionFunction selectTodo(String todoId) => AppState.todosLens.update(
-      (todos) => todos.copyWith(selectedTodoId: Maybe(todoId)),
+      (todos) => todos.copyWith(selectedTodoId: Maybe.some(todoId)),
     );
 
 ActionFunction clearTodoSelection() => AppState.todosLens.update(
-      (todos) => todos.copyWith(selectedTodoId: Maybe.nothing()),
+      (todos) => todos.copyWith(selectedTodoId: Maybe.none()),
     );

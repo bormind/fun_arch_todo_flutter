@@ -63,7 +63,7 @@ class TodosState {
     return TodosState(
       todos: new LinkedHashMap(),
       visibilityFilter: VisibilityFilter.all,
-      selectedTodoId: Maybe.nothing(),
+      selectedTodoId: Maybe.none(),
       isLoading: false,
     );
   }

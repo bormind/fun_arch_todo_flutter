@@ -71,7 +71,7 @@ class DetailsScreen extends StatelessWidget {
             onSave: (task, note) {
               store.dispatch(updateTodo(todo.id, task, note));
             },
-            todo: Maybe(todo),
+            todo: Maybe.some(todo),
           );
         },
       ),

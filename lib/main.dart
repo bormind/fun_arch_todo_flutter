@@ -23,7 +23,7 @@ void main() {
         ArchSampleRoutes.addTodo: (context) {
           return AddEditScreen(
             key: ArchSampleKeys.addTodoScreen,
-            todo: Maybe.nothing(),
+            todo: Maybe.none(),
             onSave: (task, note) {
               store.dispatch(addTodo(Todo(task, note: note)));
             },
