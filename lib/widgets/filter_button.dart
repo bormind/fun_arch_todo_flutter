@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:redurx_light_starter/env.dart';
-import 'package:redurx_light_starter/models/visibility_filter.dart';
-import 'package:redurx_light_starter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/env.dart';
+import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
+import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 class FilterButton extends StatelessWidget {

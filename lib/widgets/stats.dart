@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:redurx_light_starter/flutter_todos_keys.dart';
-import 'package:redurx_light_starter/models/stats_state.dart';
-import 'package:redurx_light_starter/store/connect_state.dart';
-import 'package:redurx_light_starter/widgets/loading_indicator.dart';
+import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
+import 'package:fun_arch_todo_flutter/models/stats_state.dart';
+import 'package:fun_arch_todo_flutter/store/connect_state.dart';
+import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:todos_app_core/todos_app_core.dart';
-import 'package:redurx_light_starter/utils/utils.dart';
+import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
   Stats({Key key}) : super(key: key);

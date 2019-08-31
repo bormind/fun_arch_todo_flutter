@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
-import 'package:redurx_light_starter/models/app_tab.dart';
-import 'package:redurx_light_starter/models/stats_state.dart';
-import 'package:redurx_light_starter/models/todos_state.dart';
-import 'package:redurx_light_starter/utils/lens.dart';
+import 'package:fun_arch_todo_flutter/models/app_tab.dart';
+import 'package:fun_arch_todo_flutter/models/stats_state.dart';
+import 'package:fun_arch_todo_flutter/models/todos_state.dart';
+import 'package:fun_arch_todo_flutter/utils/lens.dart';
 
 @immutable
 class AppState {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:redurx_light_starter/env.dart';
-import 'package:redurx_light_starter/flutter_todos_keys.dart';
-import 'package:redurx_light_starter/models/extra_action.dart';
-import 'package:redurx_light_starter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/env.dart';
+import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
+import 'package:fun_arch_todo_flutter/models/extra_action.dart';
+import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 class ExtraActions extends StatelessWidget {

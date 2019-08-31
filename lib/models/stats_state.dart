@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:redurx_light_starter/utils/maybe.dart';
+import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
 @immutable
 class StatsData {

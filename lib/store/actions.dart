@@ -1,11 +1,11 @@
-import 'package:redurx_light_starter/models/app_state.dart';
-import 'package:redurx_light_starter/models/app_tab.dart';
-import 'package:redurx_light_starter/models/todo.dart';
-import 'package:redurx_light_starter/models/todos_state.dart';
-import 'package:redurx_light_starter/models/visibility_filter.dart';
-import 'package:redurx_light_starter/store/app_store.dart';
-import 'package:redurx_light_starter/utils/lens.dart';
-import 'package:redurx_light_starter/utils/maybe.dart';
+import 'package:fun_arch_todo_flutter/models/app_state.dart';
+import 'package:fun_arch_todo_flutter/models/app_tab.dart';
+import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/models/todos_state.dart';
+import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
+import 'package:fun_arch_todo_flutter/utils/lens.dart';
+import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
 ILens<AppState, Map<String, Todo>> _todosLens =
     AppState.todosLens.combine(TodosState.todosLens);

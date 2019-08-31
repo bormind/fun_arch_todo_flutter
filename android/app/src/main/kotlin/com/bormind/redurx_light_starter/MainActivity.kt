@@ -1,4 +1,4 @@
-package com.bormind.redurx_light_starter
+package com.bormind.fun_arch_todo_flutter
 
 import android.os.Bundle
 

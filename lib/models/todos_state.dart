@@ -1,11 +1,11 @@
 import 'dart:collection';
 
 import 'package:meta/meta.dart';
-import 'package:redurx_light_starter/models/todo.dart';
-import 'package:redurx_light_starter/models/visibility_filter.dart';
-import 'package:redurx_light_starter/utils/lens.dart';
-import 'package:redurx_light_starter/utils/maybe.dart';
-import 'package:redurx_light_starter/utils/memoized.dart';
+import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
+import 'package:fun_arch_todo_flutter/utils/lens.dart';
+import 'package:fun_arch_todo_flutter/utils/maybe.dart';
+import 'package:fun_arch_todo_flutter/utils/memoized.dart';
 
 Memoized2<Iterable<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
     Memoized2((todos, visibility) {

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:redurx_light_starter/models/app_tab.dart';
+import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 class TabSelector extends StatelessWidget {

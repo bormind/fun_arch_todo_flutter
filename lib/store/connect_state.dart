@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:redurx_light_starter/env.dart';
-import 'package:redurx_light_starter/models/app_state.dart';
+import 'package:fun_arch_todo_flutter/env.dart';
+import 'package:fun_arch_todo_flutter/models/app_state.dart';
 
 class ConnectState<T> extends StatelessWidget {
   final T Function(AppState state) map;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:redurx_light_starter/env.dart';
-import 'package:redurx_light_starter/localization.dart';
-import 'package:redurx_light_starter/models/todo.dart';
-import 'package:redurx_light_starter/screens/add_edit_screen.dart';
-import 'package:redurx_light_starter/screens/home_screen.dart';
-import 'package:redurx_light_starter/store/actions.dart';
-import 'package:redurx_light_starter/utils/maybe.dart';
+import 'package:fun_arch_todo_flutter/env.dart';
+import 'package:fun_arch_todo_flutter/localization.dart';
+import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
+import 'package:fun_arch_todo_flutter/screens/home_screen.dart';
+import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 void main() {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:redurx_light_starter/models/todos_state.dart';
-import 'package:redurx_light_starter/screens/details_screen.dart';
-import 'package:redurx_light_starter/store/actions.dart';
-import 'package:redurx_light_starter/widgets/delete_todo_snack_bar.dart';
-import 'package:redurx_light_starter/widgets/loading_indicator.dart';
-import 'package:redurx_light_starter/widgets/todo_item.dart';
+import 'package:fun_arch_todo_flutter/models/todos_state.dart';
+import 'package:fun_arch_todo_flutter/screens/details_screen.dart';
+import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/widgets/delete_todo_snack_bar.dart';
+import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
+import 'package:fun_arch_todo_flutter/widgets/todo_item.dart';
 import 'package:todos_app_core/todos_app_core.dart';
-import 'package:redurx_light_starter/env.dart';
+import 'package:fun_arch_todo_flutter/env.dart';
 
 class TodosScreen extends StatelessWidget {
   final TodosState todosState;

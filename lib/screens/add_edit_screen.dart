@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:redurx_light_starter/models/todo.dart';
-import 'package:redurx_light_starter/utils/maybe.dart';
+import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 typedef OnSaveCallback = Function(String task, String note);
