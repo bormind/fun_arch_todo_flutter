@@ -19,7 +19,7 @@ class FilterButton extends StatelessWidget {
 
     final button = _Button(
       onSelected: (filter) {
-        store.dispatch(SetVisibilityFilter(filter));
+        store.dispatch(setVisibilityFilter(filter));
       },
       activeFilter: !store.state.todosState.isLoading
           ? store.state.todosState.visibilityFilter

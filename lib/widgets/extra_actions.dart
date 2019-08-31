@@ -25,14 +25,14 @@ class ExtraActions extends StatelessWidget {
         switch (action) {
           case ExtraAction.clearCompleted:
             if (store.state.todosState.todos.values.any((t) => t.completed)) {
-              store.dispatch(ClearCompleted());
+              store.dispatch(clearCompleted());
             }
             break;
           case ExtraAction.toggleAllComplete:
             if (allComplete) {
-              store.dispatch(UnCompleteAll());
+              store.dispatch(unCompleteAll());
             } else {
-              store.dispatch(CompleteAll());
+              store.dispatch(completeAll());
             }
             break;
         }

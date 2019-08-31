@@ -1,40 +1,23 @@
 import 'package:redurx_light_starter/models/app_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class AppAction {
-  AppState reduce(AppState state);
-}
-
-class _Store {
-  final BehaviorSubject<AppState> subject;
-
-  _Store(AppState initialState)
-      : subject = BehaviorSubject.seeded(initialState);
-
-  AppState get state {
-    return subject.value;
-  }
-
-  void dispatch(AppAction action) {
-//    Logger("AppStore").info("Action: $action");
-    subject.add(action.reduce(subject.value));
-  }
-}
+typedef ActionFunction = AppState Function(AppState);
 
 class AppStore {
-  final _Store _store;
+  final BehaviorSubject<AppState> _stateSubject;
 
-  AppStore(AppState initialState) : _store = _Store(initialState);
-
-  Observable<AppState> get state$ {
-    return _store.subject;
-  }
+  AppStore(AppState initialState)
+      : _stateSubject = BehaviorSubject.seeded(initialState);
 
   AppState get state {
-    return _store.state;
+    return _stateSubject.value;
   }
 
-  void dispatch(AppAction action) {
-    _store.dispatch(action);
+  Observable<AppState> get state$ {
+    return _stateSubject;
+  }
+
+  void dispatch(ActionFunction action) {
+    _stateSubject.add(action(_stateSubject.value));
   }
 }

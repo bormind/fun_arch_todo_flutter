@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         bottomNavigationBar: TabSelector(
           activeTab: state.activeTab,
-          onTabSelected: (tab) => store.dispatch(SetActiveTab(tab)),
+          onTabSelected: (tab) => store.dispatch(setActiveTab(tab)),
         ),
       ),
     );

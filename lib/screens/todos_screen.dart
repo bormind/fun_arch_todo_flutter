@@ -31,35 +31,35 @@ class TodosScreen extends StatelessWidget {
         return TodoItem(
           todo: todo,
           onDismissed: (direction) {
-            store.dispatch(DeleteTodo(todo.id));
+            store.dispatch(deleteTodo(todo.id));
             Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
               key: ArchSampleKeys.snackbar,
               todo: todo,
-              onUndo: () => store.dispatch(AddTodo(todo)),
+              onUndo: () => store.dispatch(addTodo(todo)),
               localizations: localizations,
             ));
           },
           onTap: () async {
-            store.dispatch(SelectTodo(todo.id));
+            store.dispatch(selectTodo(todo.id));
 
             final removedTodo = await Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => DetailsScreen()),
             );
 
             print(">>> Cleared todo selection");
-            store.dispatch(ClearTodoSelection());
+            store.dispatch(clearTodoSelection());
 
             if (removedTodo != null) {
               Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                 key: ArchSampleKeys.snackbar,
                 todo: todo,
-                onUndo: () => store.dispatch(AddTodo(todo)),
+                onUndo: () => store.dispatch(addTodo(todo)),
                 localizations: localizations,
               ));
             }
           },
           onCheckboxChanged: (_) {
-            store.dispatch(MarkCompletion(todo.id, !todo.completed));
+            store.dispatch(markCompletion(todo.id, !todo.completed));
           },
         );
       },
