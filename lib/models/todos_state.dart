@@ -23,7 +23,7 @@ Memoized2<Iterable<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
 class TodosState {
   static ILens<TodosState, LinkedHashMap<String, Todo>> todosLens = Lens(
     (state) => state.todos,
-    (state, todos) => state.copyWith(todos: LinkedHashMap.from(todos)),
+    (todos) => (state) => state.copyWith(todos: LinkedHashMap.from(todos)),
   );
 
   final Map<String, Todo> todos;

@@ -1,33 +1,43 @@
-abstract class ILens<A, B> {
-  B get(A a);
-  A set(A a, B b);
-  A update(A a, B f(B b)) => this.set(a, f(this.get(a)));
+//abstract class ILens<O, P> {
+//  P get(O a);
+//  O set(O a, P b);
+//  O update(O a, P f(P b)) => this.set(a, f(this.get(a)));
+//
+//  ILens<O, C> combine<C>(ILens<P, C> l) => CombinedLens(this, l);
+//}
 
-  ILens<A, C> combine<C>(ILens<B, C> l) => CombinedLens(this, l);
+abstract class ILens<O, P> {
+  P get(O o);
+
+  O Function(O) set(P b);
+
+  O Function(O) update(P f(P p)) => (o) => this.set(f(this.get(o)))(o);
+
+  ILens<O, C> combine<C>(ILens<P, C> l) => CombinedLens(this, l);
 }
 
-class Lens<A, B> extends ILens<A, B> {
-  final B Function(A a) _get;
-  final A Function(A a, B b) _set;
+class Lens<O, P> extends ILens<O, P> {
+  final P Function(O) _get;
+  final O Function(O) Function(P p) _set;
 
   Lens(this._get, this._set);
 
   @override
-  B get(A a) => _get(a);
+  P get(O o) => _get(o);
 
   @override
-  A set(A a, B b) => _set(a, b);
+  O Function(O) set(P p) => _set(p);
 }
 
-class CombinedLens<A, B, C> extends ILens<A, C> {
-  final ILens<A, B> l1;
-  final ILens<B, C> l2;
+class CombinedLens<O, P1, P2> extends ILens<O, P2> {
+  final ILens<O, P1> l1;
+  final ILens<P1, P2> l2;
 
   CombinedLens(this.l1, this.l2);
 
   @override
-  C get(A t) => l2.get(l1.get(t));
+  P2 get(O o) => l2.get(l1.get(o));
 
   @override
-  A set(A a, C c) => l1.set(a, l2.set(l1.get(a), c));
+  O Function(O) set(P2 p2) => (o) => l1.set(l2.set(p2)(l1.get(o)))(o);
 }

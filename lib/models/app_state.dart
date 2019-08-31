@@ -8,12 +8,12 @@ import 'package:redurx_light_starter/utils/lens.dart';
 class AppState {
   static ILens<AppState, TodosState> todosLens = Lens(
     (state) => state.todosState,
-    (state, todosState) => state.copyWith(todosState: todosState),
+    (todosState) => (state) => state.copyWith(todosState: todosState),
   );
 
   static ILens<AppState, StatsState> statsLens = Lens(
     (state) => state.statsState,
-    (state, statsState) => state.copyWith(statsState: statsState),
+    (statsState) => (state) => state.copyWith(statsState: statsState),
   );
 
   final TodosState todosState;

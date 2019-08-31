@@ -10,30 +10,25 @@ import 'package:redurx_light_starter/utils/maybe.dart';
 ILens<AppState, Map<String, Todo>> _todosLens =
     AppState.todosLens.combine(TodosState.todosLens);
 
-AppState _updateTodo(AppState state, String todoId, Todo update(Todo todo)) {
-  return _todosLens.update(
-      state, (todos) => todos..[todoId] = update(todos[todoId]));
-}
+AppState Function(AppState) _updateTodo(
+        String todoId, Todo update(Todo todo)) =>
+    _todosLens.update(
+      (todos) => todos..[todoId] = update(todos[todoId]),
+    );
 
-ActionFunction markCompletion(String todoId, bool isCompleted) =>
-    (state) => _updateTodo(
-          state,
-          todoId,
-          (todo) => todo.copyWith(completed: isCompleted),
-        );
+ActionFunction markCompletion(String todoId, bool isCompleted) => _updateTodo(
+      todoId,
+      (todo) => todo.copyWith(completed: isCompleted),
+    );
 
-ActionFunction deleteTodo(String todoId) => (state) {
-      final todos = _todosLens.get(state);
-      todos.remove(todoId);
-      return _todosLens.update(state, (todos) => todos..remove(todoId));
-    };
+ActionFunction deleteTodo(String todoId) =>
+    _todosLens.update((todos) => todos..remove(todoId));
 
 ActionFunction updateTodo(String todoId, String task, String notes) =>
-    (state) => _updateTodo(
-          state,
-          todoId,
-          (item) => item.copyWith(task: task, note: notes),
-        );
+    _updateTodo(
+      todoId,
+      (item) => item.copyWith(task: task, note: notes),
+    );
 
 ActionFunction setActiveTab(AppTab activeTab) => (state) =>
     state.activeTab == activeTab ? state : state.copyWith(activeTab: activeTab);
@@ -42,37 +37,29 @@ ActionFunction setVisibilityFilter(VisibilityFilter visibilityFilter) =>
     (state) => state.todosState.visibilityFilter == visibilityFilter
         ? state
         : AppState.todosLens.update(
-            state,
             (td) => td.copyWith(visibilityFilter: visibilityFilter),
-          );
+          )(state);
 
-ActionFunction clearCompleted() => (state) => _todosLens.update(
-      state,
+ActionFunction clearCompleted() => _todosLens.update(
       (todos) => todos..removeWhere((_, todo) => todo.completed),
     );
 
-ActionFunction completeAll() => (state) => _todosLens.update(
-      state,
+ActionFunction completeAll() => _todosLens.update(
       (todos) => todos..updateAll((_, todo) => todo.copyWith(completed: true)),
     );
 
-ActionFunction unCompleteAll() => (state) => _todosLens.update(
-      state,
+ActionFunction unCompleteAll() => _todosLens.update(
       (todos) => todos..updateAll((_, todo) => todo.copyWith(completed: false)),
     );
 
-ActionFunction addTodo(Todo todo) => (state) => _todosLens.update(
-      state,
+ActionFunction addTodo(Todo todo) => _todosLens.update(
       (todos) => todos..[todo.id] = todo,
     );
 
-ActionFunction selectTodo(String todoId) =>
-    (state) => AppState.todosLens.update(
-          state,
-          (todos) => todos.copyWith(selectedTodoId: Maybe(todoId)),
-        );
+ActionFunction selectTodo(String todoId) => AppState.todosLens.update(
+      (todos) => todos.copyWith(selectedTodoId: Maybe(todoId)),
+    );
 
-ActionFunction clearTodoSelection() => (state) => AppState.todosLens.update(
-      state,
+ActionFunction clearTodoSelection() => AppState.todosLens.update(
       (todos) => todos.copyWith(selectedTodoId: Maybe.nothing()),
     );
