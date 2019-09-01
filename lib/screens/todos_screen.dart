@@ -17,7 +17,7 @@ class TodosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = ArchSampleLocalizations.of(context);
-    if (store.state.todosState.isLoading) {
+    if (Env.store.state.todosState.isLoading) {
       return LoadingIndicator(key: ArchSampleKeys.todosLoading);
     }
 
@@ -31,35 +31,35 @@ class TodosScreen extends StatelessWidget {
         return TodoItem(
           todo: todo,
           onDismissed: (direction) {
-            store.dispatch(deleteTodo(todo.id));
+            Env.store.dispatch(deleteTodo(todo.id));
             Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
               key: ArchSampleKeys.snackbar,
               todo: todo,
-              onUndo: () => store.dispatch(addTodo(todo)),
+              onUndo: () => Env.store.dispatch(addTodo(todo)),
               localizations: localizations,
             ));
           },
           onTap: () async {
-            store.dispatch(selectTodo(todo.id));
+            Env.store.dispatch(selectTodo(todo.id));
 
             final removedTodo = await Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => DetailsScreen()),
             );
 
             print(">>> Cleared todo selection");
-            store.dispatch(clearTodoSelection());
+            Env.store.dispatch(clearTodoSelection());
 
             if (removedTodo != null) {
               Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                 key: ArchSampleKeys.snackbar,
                 todo: todo,
-                onUndo: () => store.dispatch(addTodo(todo)),
+                onUndo: () => Env.store.dispatch(addTodo(todo)),
                 localizations: localizations,
               ));
             }
           },
           onCheckboxChanged: (_) {
-            store.dispatch(markCompletion(todo.id, !todo.completed));
+            Env.store.dispatch(markCompletion(todo.id, !todo.completed));
           },
         );
       },

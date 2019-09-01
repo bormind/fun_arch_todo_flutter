@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    Env.fetcher.loadTodos();
     super.initState();
   }
 
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         bottomNavigationBar: TabSelector(
           activeTab: state.activeTab,
-          onTabSelected: (tab) => store.dispatch(setActiveTab(tab)),
+          onTabSelected: (tab) => Env.store.dispatch(setActiveTab(tab)),
         ),
       ),
     );

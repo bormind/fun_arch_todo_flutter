@@ -25,7 +25,8 @@ class DetailsScreen extends StatelessWidget {
                 child: Checkbox(
                     value: todo.completed,
                     onChanged: (_) {
-                      store.dispatch(markCompletion(todo.id, !todo.completed));
+                      Env.store
+                          .dispatch(markCompletion(todo.id, !todo.completed));
                     }),
               ),
               Expanded(
@@ -69,7 +70,7 @@ class DetailsScreen extends StatelessWidget {
           return AddEditScreen(
             key: ArchSampleKeys.editTodoScreen,
             onSave: (task, note) {
-              store.dispatch(updateTodo(todo.id, task, note));
+              Env.store.dispatch(updateTodo(todo.id, task, note));
             },
             todo: Maybe.some(todo),
           );
@@ -94,7 +95,7 @@ class DetailsScreen extends StatelessWidget {
                 icon: Icon(Icons.delete),
                 onPressed: todo
                     .map((td) => () {
-                          store.dispatch(deleteTodo(td.id));
+                          Env.store.dispatch(deleteTodo(td.id));
                           Navigator.pop(context, todo);
                         })
                     .orElse(null))

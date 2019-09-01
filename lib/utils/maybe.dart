@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 abstract class Maybe<T> {
   factory Maybe.none() {
     return _None<T>();

@@ -12,27 +12,28 @@ class ExtraActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (store.state.todosState.todos.isEmpty) {
+    if (Env.store.state.todosState.todos.isEmpty) {
       return Container(key: FlutterTodosKeys.extraActionsEmptyContainer);
     }
 
     final allComplete =
-        store.state.todosState.todos.values.every((t) => t.completed);
+        Env.store.state.todosState.todos.values.every((t) => t.completed);
 
     return PopupMenuButton<ExtraAction>(
       key: FlutterTodosKeys.extraActionsPopupMenuButton,
       onSelected: (action) {
         switch (action) {
           case ExtraAction.clearCompleted:
-            if (store.state.todosState.todos.values.any((t) => t.completed)) {
-              store.dispatch(clearCompleted());
+            if (Env.store.state.todosState.todos.values
+                .any((t) => t.completed)) {
+              Env.store.dispatch(clearCompleted());
             }
             break;
           case ExtraAction.toggleAllComplete:
             if (allComplete) {
-              store.dispatch(unCompleteAll());
+              Env.store.dispatch(unCompleteAll());
             } else {
-              store.dispatch(completeAll());
+              Env.store.dispatch(completeAll());
             }
             break;
         }
