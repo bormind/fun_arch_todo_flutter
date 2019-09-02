@@ -18,7 +18,7 @@ Those are principals that we flow for the app implementation
     - `state` - current version of the app state
     - `state$` - `Observable<AppState>` - representation of the state changes over time
     - `dispath(ActionFunction)` 
-- `ActionFunction` is a combination of Action and the Reducer in one function any function with signature  `AppState -> AppState` can be used as an ActionFunction
+- `ActionFunction` is a combination of _Action_ and the _Reducer_ in one function any function with signature  `AppState -> AppState` can be used as an ActionFunction
 - `ActionFunctions` are always synchronous and used  only to modify the state/sub-state
 _(Potentially Asynchronous version of `ActtionFunction` and `dispatch` method can be used to represent a asynchronous calls but we find it "cleaner" to use Actions only to update. And delegate any logic and data fetching to regular service methods)_
 - For asynchronous functionality of fetching and manipulating the data  a special `Fettcher` service is used.
