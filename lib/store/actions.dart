@@ -64,6 +64,6 @@ ActionFunction clearTodoSelection() => AppState.todosLens.update(
       (todos) => todos.copyWith(selectedTodoId: Maybe.none()),
     );
 
-ActionFunction setTodos(List<Todo> list) => _todosLens.update(
+ActionFunction setTodos(Iterable<Todo> list) => _todosLens.update(
       (todos) => todos..addEntries(list.map((td) => MapEntry(td.id, td))),
     );
