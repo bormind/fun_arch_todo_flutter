@@ -3,9 +3,10 @@
 This repository contains a reference implementation of the Flutter architecture. The general approach is based on [the ReduRx implementation](https://github.com/felangel/flutter_architecture_samples/tree/master/redurx) but with some modifications.
 
 ## Key Points
-* _ActionFunctions_ are  used for triggering changes in the application state - combination of 'action' and 'reducer' in the same function
-* Lenses are utilized for deep modifications of the immutable Application State (instead of combining reducers redux style).
-* Changes in the state are propagated to UI Widgets by use of the "ConnectState" widget. Re-rendering of the widgets is triggered automatically when the sub-state that a widget is subscribed to changes.  
+* AppSore exposes ***Observable State*** of the application.
+* ***ActionFunctions*** are  used for triggering changes in the application state - combination of 'action' and 'reducer' in the same function
+* ***Lenses*** are utilized for deep modifications of the immutable Application State (instead of combining reducers redux style).
+* Changes in the state are propagated to UI Widgets by use of the ***ConnectState*** widget. Re-rendering of the widgets is triggered automatically when the sub-state that a widget is subscribed to changes.  
 
 ### Details
 The app implementation adheres to the following principles:
