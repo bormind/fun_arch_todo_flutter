@@ -6,7 +6,7 @@ import 'package:fun_arch_todo_flutter/utils/lens.dart';
 
 @immutable
 class AppState {
-  static ILens<AppState, TodosState> todosLens = Lens(
+  static ILens<AppState, TodosState> todosStateLens = Lens(
     (state) => state.todosState,
     (todosState) => (state) => state.copyWith(todosState: todosState),
   );

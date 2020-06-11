@@ -8,7 +8,7 @@ import 'package:fun_arch_todo_flutter/utils/lens.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
 ILens<AppState, Map<String, Todo>> _todosLens =
-    AppState.todosLens.combine(TodosState.todosLens);
+    AppState.todosStateLens.combine(TodosState.todosLens);
 
 AppState Function(AppState) _updateTodo(
         String todoId, Todo update(Todo todo)) =>
@@ -36,7 +36,7 @@ ActionFunction setActiveTab(AppTab activeTab) => (state) =>
 ActionFunction setVisibilityFilter(VisibilityFilter visibilityFilter) =>
     (state) => state.todosState.visibilityFilter == visibilityFilter
         ? state
-        : AppState.todosLens.update(
+        : AppState.todosStateLens.update(
             (td) => td.copyWith(visibilityFilter: visibilityFilter),
           )(state);
 
@@ -56,11 +56,11 @@ ActionFunction addTodo(Todo todo) => _todosLens.update(
       (todos) => todos..[todo.id] = todo,
     );
 
-ActionFunction selectTodo(String todoId) => AppState.todosLens.update(
+ActionFunction selectTodo(String todoId) => AppState.todosStateLens.update(
       (todos) => todos.copyWith(selectedTodoId: Maybe.some(todoId)),
     );
 
-ActionFunction clearTodoSelection() => AppState.todosLens.update(
+ActionFunction clearTodoSelection() => AppState.todosStateLens.update(
       (todos) => todos.copyWith(selectedTodoId: Maybe.none()),
     );
 
