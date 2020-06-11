@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
+import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/connect_state.dart';
+import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
 class FilterButton extends StatelessWidget {
@@ -11,26 +14,32 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = Theme.of(context).textTheme.body1;
-    final activeStyle = Theme.of(context)
-        .textTheme
-        .body1
-        .copyWith(color: Theme.of(context).accentColor);
+    return ConnectState<TodosState>(
+      map: (state) => state.todosState,
+      where: notEqual,
+      builder: (todosState) {
+        final defaultStyle = Theme.of(context).textTheme.bodyText1;
+        final activeStyle = Theme.of(context)
+            .textTheme
+            .bodyText1
+            .copyWith(color: Theme.of(context).accentColor);
 
-    final button = _Button(
-      onSelected: (filter) {
-        Env.store.dispatch(setVisibilityFilter(filter));
+        final button = _Button(
+          onSelected: (filter) {
+            Env.store.dispatch(setVisibilityFilter(filter));
+          },
+          activeFilter: !todosState.isLoading
+              ? todosState.visibilityFilter
+              : VisibilityFilter.all,
+          activeStyle: activeStyle,
+          defaultStyle: defaultStyle,
+        );
+        return AnimatedOpacity(
+          opacity: visible ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 150),
+          child: visible ? button : IgnorePointer(child: button),
+        );
       },
-      activeFilter: !Env.store.state.todosState.isLoading
-          ? Env.store.state.todosState.visibilityFilter
-          : VisibilityFilter.all,
-      activeStyle: activeStyle,
-      defaultStyle: defaultStyle,
-    );
-    return AnimatedOpacity(
-      opacity: visible ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 150),
-      child: visible ? button : IgnorePointer(child: button),
     );
   }
 }

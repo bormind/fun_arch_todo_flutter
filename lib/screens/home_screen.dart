@@ -28,33 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<AppState>(
-      map: (state) => state,
+    return ConnectState<AppTab>(
+      map: (state) => state.activeTab,
       where: notIdentical,
-      builder: (state) => Scaffold(
-        appBar: AppBar(
-          title: Text("Todo Starter"),
-          actions: [
-            FilterButton(visible: state.activeTab == AppTab.todos),
-            ExtraActions(),
-          ],
-        ),
-        body: state.activeTab == AppTab.todos
-            ? TodosScreen(state.todosState)
-            : Stats(),
-        floatingActionButton: FloatingActionButton(
-          key: ArchSampleKeys.addTodoFab,
-          onPressed: () {
-            Navigator.pushNamed(context, ArchSampleRoutes.addTodo);
-          },
-          child: Icon(Icons.add),
-          tooltip: ArchSampleLocalizations.of(context).addTodo,
-        ),
-        bottomNavigationBar: TabSelector(
-          activeTab: state.activeTab,
-          onTabSelected: (tab) => Env.store.dispatch(setActiveTab(tab)),
-        ),
-      ),
+      builder: (activeTab) {
+        print("Rendering Home Screen");
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Todo Starter"),
+            actions: [
+              FilterButton(visible: activeTab == AppTab.todos),
+              ExtraActions(),
+            ],
+          ),
+          body: activeTab == AppTab.todos ? TodosScreen() : Stats(),
+          floatingActionButton: FloatingActionButton(
+            key: ArchSampleKeys.addTodoFab,
+            onPressed: () {
+              Navigator.pushNamed(context, ArchSampleRoutes.addTodo);
+            },
+            child: Icon(Icons.add),
+            tooltip: ArchSampleLocalizations.of(context).addTodo,
+          ),
+          bottomNavigationBar: TabSelector(
+            activeTab: activeTab,
+            onTabSelected: (tab) => Env.store.dispatch(setActiveTab(tab)),
+          ),
+        );
+      },
     );
   }
 }
