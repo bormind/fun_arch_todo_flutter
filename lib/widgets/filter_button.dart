@@ -26,7 +26,7 @@ class FilterButton extends StatelessWidget {
 
         final button = _Button(
           onSelected: (filter) {
-            Env.store.dispatch(setVisibilityFilter(filter));
+            Env.store.dispatch(SetVisibilityFilter(filter));
           },
           activeFilter: !todosState.isLoading
               ? todosState.visibilityFilter

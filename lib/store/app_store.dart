@@ -1,7 +1,7 @@
 import 'package:fun_arch_todo_flutter/models/app_state.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef ActionFunction = AppState Function(AppState);
+import 'actions.dart';
 
 class AppStore {
   final BehaviorSubject<AppState> _stateSubject;
@@ -17,7 +17,7 @@ class AppStore {
     return _stateSubject;
   }
 
-  void dispatch(ActionFunction action) {
-    _stateSubject.add(action(_stateSubject.value));
+  void dispatch(Action action) {
+    _stateSubject.add(action.updateState(_stateSubject.value));
   }
 }

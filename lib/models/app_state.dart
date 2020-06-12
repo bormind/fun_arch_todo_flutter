@@ -2,20 +2,9 @@ import 'package:meta/meta.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/stats_state.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
-import 'package:fun_arch_todo_flutter/utils/lens.dart';
 
 @immutable
 class AppState {
-  static ILens<AppState, TodosState> todosStateLens = Lens(
-    (state) => state.todosState,
-    (todosState) => (state) => state.copyWith(todosState: todosState),
-  );
-
-  static ILens<AppState, StatsState> statsLens = Lens(
-    (state) => state.statsState,
-    (statsState) => (state) => state.copyWith(statsState: statsState),
-  );
-
   final TodosState todosState;
   final StatsState statsState;
   final AppTab activeTab;

@@ -26,7 +26,7 @@ class DetailsScreen extends StatelessWidget {
                     value: todo.completed,
                     onChanged: (_) {
                       Env.store
-                          .dispatch(markCompletion(todo.id, !todo.completed));
+                          .dispatch(MarkCompletion(todo.id, !todo.completed));
                     }),
               ),
               Expanded(
@@ -44,14 +44,14 @@ class DetailsScreen extends StatelessWidget {
                         child: Text(
                           todo.task,
                           key: ArchSampleKeys.detailsTodoItemTask,
-                          style: Theme.of(context).textTheme.headline,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
                     ),
                     Text(
                       todo.note,
                       key: ArchSampleKeys.detailsTodoItemNote,
-                      style: Theme.of(context).textTheme.subhead,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ],
                 ),
@@ -70,7 +70,7 @@ class DetailsScreen extends StatelessWidget {
           return AddEditScreen(
             key: ArchSampleKeys.editTodoScreen,
             onSave: (task, note) {
-              Env.store.dispatch(updateTodo(todo.id, task, note));
+              Env.store.dispatch(UpdateTodo(todo.id, task, note));
             },
             todo: Maybe.some(todo),
           );
@@ -95,7 +95,7 @@ class DetailsScreen extends StatelessWidget {
                 icon: Icon(Icons.delete),
                 onPressed: todo
                     .map((td) => () {
-                          Env.store.dispatch(deleteTodo(td.id));
+                          Env.store.dispatch(DeleteTodo(td.id));
                           Navigator.pop(context, todo);
                         })
                     .orElse(null))

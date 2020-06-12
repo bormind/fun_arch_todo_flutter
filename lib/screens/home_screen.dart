@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
-import 'package:fun_arch_todo_flutter/models/app_state.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/screens/todos_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
@@ -53,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           bottomNavigationBar: TabSelector(
             activeTab: activeTab,
-            onTabSelected: (tab) => Env.store.dispatch(setActiveTab(tab)),
+            onTabSelected: (tab) => Env.store.dispatch(SetActiveTab(tab)),
           ),
         );
       },

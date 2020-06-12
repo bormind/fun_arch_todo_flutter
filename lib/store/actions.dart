@@ -3,67 +3,186 @@ import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
-import 'package:fun_arch_todo_flutter/store/app_store.dart';
-import 'package:fun_arch_todo_flutter/utils/lens.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
-ILens<AppState, Map<String, Todo>> _todosLens =
-    AppState.todosStateLens.combine(TodosState.todosLens);
+abstract class Action {
+  AppState updateState(AppState appState);
+}
 
-AppState Function(AppState) _updateTodo(
-        String todoId, Todo update(Todo todo)) =>
-    _todosLens.update(
-      (todos) => todos..[todoId] = update(todos[todoId]),
-    );
+AppState _updateTodoState(
+  AppState appState,
+  TodosState update(TodosState todosState),
+) {
+  return appState.copyWith(todosState: update(appState.todosState));
+}
 
-ActionFunction markCompletion(String todoId, bool isCompleted) => _updateTodo(
+AppState _updateTodos(
+  AppState appState,
+  void updateInPlace(Map<String, Todo> todos),
+) {
+  var cloneMap = Map.from(appState.todosState.todos);
+  updateInPlace(cloneMap);
+  return _updateTodoState(
+      appState, (todosState) => todosState.copyWith(todos: cloneMap));
+}
+
+AppState _updateSingleTodo(
+  AppState appState,
+  String todoId,
+  Todo update(Todo todo),
+) {
+  return _updateTodos(
+      appState, (todos) => todos..[todoId] = update(todos[todoId]));
+}
+
+class MarkCompletion implements Action {
+  final String todoId;
+  final bool isCompleted;
+
+  MarkCompletion(this.todoId, this.isCompleted);
+
+  @override
+  AppState updateState(AppState appState) {
+    return _updateSingleTodo(
+      appState,
       todoId,
       (todo) => todo.copyWith(completed: isCompleted),
     );
+  }
+}
 
-ActionFunction deleteTodo(String todoId) =>
-    _todosLens.update((todos) => todos..remove(todoId));
+class DeleteTodo implements Action {
+  final String todoId;
 
-ActionFunction updateTodo(String todoId, String task, String notes) =>
-    _updateTodo(
+  DeleteTodo(this.todoId);
+
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos.remove(todoId);
+    });
+  }
+}
+
+class UpdateTodo implements Action {
+  final String todoId;
+  final String task;
+  final String notes;
+
+  UpdateTodo(this.todoId, this.task, this.notes);
+
+  @override
+  AppState updateState(AppState appState) {
+    return _updateSingleTodo(
+      appState,
       todoId,
-      (item) => item.copyWith(task: task, note: notes),
+      (todo) => todo.copyWith(task: task, note: notes),
     );
+  }
+}
 
-ActionFunction setActiveTab(AppTab activeTab) => (state) =>
-    state.activeTab == activeTab ? state : state.copyWith(activeTab: activeTab);
+class SetActiveTab implements Action {
+  final AppTab activeTab;
 
-ActionFunction setVisibilityFilter(VisibilityFilter visibilityFilter) =>
-    (state) => state.todosState.visibilityFilter == visibilityFilter
-        ? state
-        : AppState.todosStateLens.update(
-            (td) => td.copyWith(visibilityFilter: visibilityFilter),
-          )(state);
+  SetActiveTab(this.activeTab);
 
-ActionFunction clearCompleted() => _todosLens.update(
-      (todos) => todos..removeWhere((_, todo) => todo.completed),
+  @override
+  AppState updateState(AppState appState) {
+    return appState.copyWith(activeTab: activeTab);
+  }
+}
+
+class SetVisibilityFilter implements Action {
+  final VisibilityFilter visibilityFilter;
+
+  SetVisibilityFilter(this.visibilityFilter);
+
+  @override
+  AppState updateState(AppState appState) {
+    if (appState.todosState.visibilityFilter == visibilityFilter) {
+      return appState;
+    }
+
+    return _updateTodoState(
+      appState,
+      (todosState) => todosState.copyWith(visibilityFilter: visibilityFilter),
     );
+  }
+}
 
-ActionFunction completeAll() => _todosLens.update(
-      (todos) => todos..updateAll((_, todo) => todo.copyWith(completed: true)),
-    );
+class ClearCompleted implements Action {
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos.removeWhere((_, todo) => todo.completed);
+    });
+  }
+}
 
-ActionFunction unCompleteAll() => _todosLens.update(
-      (todos) => todos..updateAll((_, todo) => todo.copyWith(completed: false)),
-    );
+class CompleteAll implements Action {
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos.updateAll((_, todo) => todo.copyWith(completed: true));
+    });
+  }
+}
 
-ActionFunction addTodo(Todo todo) => _todosLens.update(
-      (todos) => todos..[todo.id] = todo,
-    );
+class UnCompleteAll implements Action {
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos.updateAll((_, todo) => todo.copyWith(completed: false));
+    });
+  }
+}
 
-ActionFunction selectTodo(String todoId) => AppState.todosStateLens.update(
-      (todos) => todos.copyWith(selectedTodoId: Maybe.some(todoId)),
-    );
+class AddTodo implements Action {
+  final Todo todo;
 
-ActionFunction clearTodoSelection() => AppState.todosStateLens.update(
-      (todos) => todos.copyWith(selectedTodoId: Maybe.none()),
-    );
+  AddTodo(this.todo);
 
-ActionFunction setTodos(Iterable<Todo> list) => _todosLens.update(
-      (todos) => todos..addEntries(list.map((td) => MapEntry(td.id, td))),
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos[todo.id] = todo;
+    });
+  }
+}
+
+class SelectTodo implements Action {
+  final String todoId;
+
+  SelectTodo(this.todoId);
+
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodoState(
+      appState,
+      (todosState) => todosState.copyWith(selectedTodoId: Maybe.some(todoId)),
     );
+  }
+}
+
+class ClearSelection implements Action {
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodoState(
+      appState,
+      (todosState) => todosState.copyWith(selectedTodoId: Maybe.none()),
+    );
+  }
+}
+
+class SetTodos implements Action {
+  final Iterable<Todo> list;
+
+  SetTodos(this.list);
+
+  @override
+  AppState updateState(AppState appState) {
+    return _updateTodos(appState, (todos) {
+      todos.addEntries(list.map((todo) => MapEntry(todo.id, todo)));
+    });
+  }
+}

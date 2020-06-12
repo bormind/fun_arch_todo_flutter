@@ -37,35 +37,35 @@ class TodosScreen extends StatelessWidget {
               return TodoItem(
                 todo: todo,
                 onDismissed: (direction) {
-                  Env.store.dispatch(deleteTodo(todo.id));
+                  Env.store.dispatch(DeleteTodo(todo.id));
                   Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                     key: ArchSampleKeys.snackbar,
                     todo: todo,
-                    onUndo: () => Env.store.dispatch(addTodo(todo)),
+                    onUndo: () => Env.store.dispatch(AddTodo(todo)),
                     localizations: localizations,
                   ));
                 },
                 onTap: () async {
-                  Env.store.dispatch(selectTodo(todo.id));
+                  Env.store.dispatch(SelectTodo(todo.id));
 
                   final removedTodo = await Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => DetailsScreen()),
                   );
 
                   print(">>> Cleared todo selection");
-                  Env.store.dispatch(clearTodoSelection());
+                  Env.store.dispatch(ClearSelection());
 
                   if (removedTodo != null) {
                     Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                       key: ArchSampleKeys.snackbar,
                       todo: todo,
-                      onUndo: () => Env.store.dispatch(addTodo(todo)),
+                      onUndo: () => Env.store.dispatch(AddTodo(todo)),
                       localizations: localizations,
                     ));
                   }
                 },
                 onCheckboxChanged: (_) {
-                  Env.store.dispatch(markCompletion(todo.id, !todo.completed));
+                  Env.store.dispatch(MarkCompletion(todo.id, !todo.completed));
                 },
               );
             },
