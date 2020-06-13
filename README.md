@@ -1,6 +1,6 @@
 # fun_arch_todo_flutter
 
-This repository contains a reference implementation of the Flutter state management architecture. It uses centralized application State managed by the store. (Redux like approach but without reducers).
+This repository contains a reference implementation of the Flutter state management architecture. It uses centralized application State managed by the Store. (Redux like approach but without reducers).
  It does not use BLoC or Provider patents.  
 
 ### Details
@@ -19,4 +19,5 @@ The app implementation adheres to the following principles:
 - For asynchronous functionality of fetching and manipulating the data a special `Fettcher` service is used.
     - Fetcher methods are responsible for calling `Store::dispatch(...)` method before (if needed) and after fetching and preparing the data to update the state.
     - Fetcher methods return `Future<>` to allow the caller of the `fetch` methods (usually UI components) to handle success or failure of the `fetch` calls to make "Navigation Decisions".
+- `ConnectState` widget is used to control the rendering (build(..)) of the UI Components (Widgets) by subscribing to changes of the parts of the AppState relevant to the Component.
     
