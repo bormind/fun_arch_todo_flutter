@@ -20,7 +20,7 @@ AppState _updateTodos(
   AppState appState,
   void updateInPlace(Map<String, Todo> todos),
 ) {
-  var cloneMap = Map.from(appState.todosState.todos);
+  Map<String, Todo> cloneMap = Map.from(appState.todosState.todos);
   updateInPlace(cloneMap);
   return _updateTodoState(
       appState, (todosState) => todosState.copyWith(todos: cloneMap));

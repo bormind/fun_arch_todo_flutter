@@ -1,12 +1,7 @@
 # fun_arch_todo_flutter
 
-This repository contains a reference implementation of the Flutter architecture. The general approach is based on [the ReduRx implementation](https://github.com/felangel/flutter_architecture_samples/tree/master/redurx) but with some modifications.
-
-## Key Points
-* AppSore exposes ***Observable State*** of the application.
-* ***ActionFunctions*** are  used for triggering changes in the application state - combination of 'action' and 'reducer' in the same function
-* ***Lenses*** are utilized for deep modifications of the immutable Application State (instead of combining reducers redux style).
-* Changes in the state are propagated to UI Widgets by use of the ***ConnectState*** widget. Re-rendering of the widgets is triggered automatically when the sub-state that a widget is subscribed to changes.  
+This repository contains a reference implementation of the Flutter state management architecture. It uses centralized application State managed by the store. (Redux like approach but without reducers).
+ It does not use BLoC or Provider patents.  
 
 ### Details
 The app implementation adheres to the following principles:
@@ -18,10 +13,10 @@ The app implementation adheres to the following principles:
     - `state` - current version of the app state
     - `state$` - `Observable<AppState>` - representation of the state changes over time
     - `dispath(ActionFunction)` 
-- An `ActionFunction` is a combination of _Action_ and the _Reducer_ in one function. Any function with signature  `AppState -> AppState` can be used as an `ActionFunction`.
-- `ActionFunctions` are always synchronous and used only to modify the state/sub-state. _It is possible to use asynchronous versions of `ActionFunction` and `dispatch` to represent a asynchronous calls but we find it "cleaner" to use Actions only to update the state and delegate any logic and data fetching to regular service methods_
-_(Potentially Asynchronous version of `ActtionFunction` and `dispatch` method can be used to represent a asynchronous calls but we find it "cleaner" to only use dispatch actions for state updates. And delegate any  other application logic and data fetching to regular service methods)_
+- State can be modified by calling Store.dispatch(...) function passing Action as a parameter
+- There are two reference implementations of the Actions 1) as a regular Classs (ActionClass) that implements updateState AppState->AppState that returns modified version of the state.  
+- `Actions` are always synchronous and used only to modify the state/sub-state.
 - For asynchronous functionality of fetching and manipulating the data a special `Fettcher` service is used.
     - Fetcher methods are responsible for calling `Store::dispatch(...)` method before (if needed) and after fetching and preparing the data to update the state.
-    - Fetcher methods return `Future<>` to allow the caller of the fetch methods (usually UI components) to handle success or failure of the fetch calls to make "Navigation Decisions".
+    - Fetcher methods return `Future<>` to allow the caller of the `fetch` methods (usually UI components) to handle success or failure of the `fetch` calls to make "Navigation Decisions".
     
