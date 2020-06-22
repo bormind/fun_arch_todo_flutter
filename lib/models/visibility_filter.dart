@@ -1,1 +1,5 @@
-enum VisibilityFilter { all, active, completed }
+enum VisibilityFilter {
+  all,
+  active,
+  completed,
+}
