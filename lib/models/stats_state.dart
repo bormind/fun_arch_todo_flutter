@@ -1,8 +1,11 @@
+import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
-@immutable
-class StatsData {
+part 'stats_state.g.dart';
+
+@FunctionalData()
+class StatsData extends $StatsData {
   final int numActive;
   final int numCompleted;
 
@@ -12,7 +15,8 @@ class StatsData {
   });
 }
 
-class StatsState {
+@FunctionalData()
+class StatsState extends $StatsState {
   final Maybe<StatsData> statsData;
   final bool isLoading;
 
@@ -20,16 +24,6 @@ class StatsState {
     @required this.statsData,
     @required this.isLoading,
   });
-
-  StatsState copyWith({
-    Maybe<StatsData> statsData,
-    bool isLoading,
-  }) {
-    return StatsState(
-      statsData: statsData ?? this.statsData,
-      isLoading: isLoading ?? this.isLoading,
-    );
-  }
 
   factory StatsState.initial() {
     return StatsState(

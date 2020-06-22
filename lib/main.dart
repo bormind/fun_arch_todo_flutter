@@ -25,7 +25,7 @@ void main() {
             key: ArchSampleKeys.addTodoScreen,
             todo: Maybe.none(),
             onSave: (task, note) {
-              Env.store.dispatch(AddTodo(Todo(task, note: note)));
+              Env.store.dispatch(AddTodo(Todo.newTote(task, note)));
             },
           );
         },

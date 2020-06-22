@@ -1,11 +1,13 @@
 import 'dart:collection';
 
+import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
-import 'package:fun_arch_todo_flutter/utils/lens.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 import 'package:fun_arch_todo_flutter/utils/memoized.dart';
+
+part 'todos_state.g.dart';
 
 Memoized2<Iterable<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
     Memoized2((todos, visibility) {
@@ -20,12 +22,8 @@ Memoized2<Iterable<Todo>, VisibilityFilter, List<Todo>> _visibleTodos =
   }
 });
 
-class TodosState {
-  static ILens<TodosState, LinkedHashMap<String, Todo>> todosLens = Lens(
-    (state) => state.todos,
-    (todos) => (state) => state.copyWith(todos: LinkedHashMap.from(todos)),
-  );
-
+@FunctionalData()
+class TodosState extends $TodosState {
   final Map<String, Todo> todos;
   final VisibilityFilter visibilityFilter;
   final Maybe<String> selectedTodoId;
@@ -37,20 +35,6 @@ class TodosState {
     @required this.selectedTodoId,
     @required this.isLoading,
   });
-
-  TodosState copyWith({
-    Map<String, Todo> todos,
-    VisibilityFilter visibilityFilter,
-    Maybe<String> selectedTodoId,
-    bool isLoadingTodos,
-  }) {
-    return TodosState(
-      todos: todos ?? this.todos,
-      visibilityFilter: visibilityFilter ?? this.visibilityFilter,
-      selectedTodoId: selectedTodoId ?? this.selectedTodoId,
-      isLoading: isLoading ?? this.isLoading,
-    );
-  }
 
   Iterable<Todo> get visibleTodos =>
       _visibleTodos.getOrCalculate(this.todos.values, this.visibilityFilter);

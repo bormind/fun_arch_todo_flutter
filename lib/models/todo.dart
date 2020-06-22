@@ -1,47 +1,45 @@
+import 'package:flutter/foundation.dart';
 import 'package:todos_app_core/todos_app_core.dart';
-import 'package:meta/meta.dart';
 import 'package:todos_repository_core/todos_repository_core.dart';
 
-@immutable
-class Todo {
-  final bool completed;
-  final String id;
-  final String note;
+import 'package:functional_data/functional_data.dart';
+
+part 'todo.g.dart';
+
+@FunctionalData()
+class Todo extends $Todo {
   final String task;
+  final String note;
+  final String id;
+  final bool completed;
 
-  Todo(this.task, {this.completed = false, String note = '', String id})
-      : this.note = note ?? '',
-        this.id = id ?? Uuid().generateV4();
+  const Todo({
+    @required this.task,
+    @required this.note,
+    @required this.id,
+    @required this.completed,
+  });
 
-  Todo copyWith({
-    bool completed,
-    String id,
-    String note,
-    String task,
-  }) {
+  static Todo newTask(String task) {
     return Todo(
-      task ?? this.task,
-      completed: completed ?? this.completed,
-      id: id ?? this.id,
-      note: note ?? this.note,
-    );
+        task: task, note: '', id: Uuid().generateV4(), completed: false);
   }
 
-  @override
-  String toString() {
-    return 'Todo { complete: $completed, task: $task, note: $note, id: $id }';
-  }
-
-  TodoEntity toEntity() {
-    return TodoEntity(task, id, note, completed);
+  static Todo newTote(String task, String note) {
+    return Todo(
+        task: task, note: note, id: Uuid().generateV4(), completed: false);
   }
 
   static Todo fromEntity(TodoEntity entity) {
     return Todo(
-      entity.task,
+      task: entity.task,
       completed: entity.complete ?? false,
       note: entity.note,
       id: entity.id ?? Uuid().generateV4(),
     );
+  }
+
+  TodoEntity toEntity() {
+    return TodoEntity(task, id, note, completed);
   }
 }

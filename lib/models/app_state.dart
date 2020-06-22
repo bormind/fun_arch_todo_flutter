@@ -1,10 +1,13 @@
+import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/stats_state.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 
-@immutable
-class AppState {
+part 'app_state.g.dart';
+
+@FunctionalData()
+class AppState extends $AppState {
   final TodosState todosState;
   final StatsState statsState;
   final AppTab activeTab;
@@ -14,18 +17,6 @@ class AppState {
     @required this.statsState,
     @required this.activeTab,
   });
-
-  AppState copyWith({
-    TodosState todosState,
-    StatsState statsState,
-    AppTab activeTab,
-  }) {
-    return AppState(
-      todosState: todosState ?? this.todosState,
-      statsState: statsState ?? this.statsState,
-      activeTab: activeTab ?? this.activeTab,
-    );
-  }
 
   factory AppState.initial() {
     return AppState(
