@@ -14,12 +14,12 @@ abstract class $TodosState {
   const $TodosState();
   Map<String, Todo> get todos;
   VisibilityFilter get visibilityFilter;
-  Maybe<String> get selectedTodoId;
+  Optional<String> get selectedTodoId;
   bool get isLoading;
   TodosState copyWith(
           {Map<String, Todo> todos,
           VisibilityFilter visibilityFilter,
-          Maybe<String> selectedTodoId,
+          Optional<String> selectedTodoId,
           bool isLoading}) =>
       TodosState(
           todos: todos ?? this.todos,
@@ -54,7 +54,7 @@ class TodosState$ {
       (s_) => s_.visibilityFilter,
       (s_, visibilityFilter) =>
           s_.copyWith(visibilityFilter: visibilityFilter));
-  static final selectedTodoId = Lens<TodosState, Maybe<String>>(
+  static final selectedTodoId = Lens<TodosState, Optional<String>>(
       (s_) => s_.selectedTodoId,
       (s_, selectedTodoId) => s_.copyWith(selectedTodoId: selectedTodoId));
   static final isLoading = Lens<TodosState, bool>((s_) => s_.isLoading,

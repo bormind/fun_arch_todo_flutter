@@ -61,7 +61,7 @@ class Stats extends StatelessWidget {
             ? LoadingIndicator(key: FlutterTodosKeys.statsLoadingIndicator)
             : stats.statsData
                 .map((statsData) => _renderStatsData(context, statsData))
-                .orElse(SizedBox());
+                .valueOr(() => SizedBox());
       },
     );
   }

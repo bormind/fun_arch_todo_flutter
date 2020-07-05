@@ -1,6 +1,6 @@
 import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
-import 'package:fun_arch_todo_flutter/utils/maybe.dart';
+import 'package:plain_optional/plain_optional.dart';
 
 part 'stats_state.g.dart';
 
@@ -17,7 +17,7 @@ class StatsData extends $StatsData {
 
 @FunctionalData()
 class StatsState extends $StatsState {
-  final Maybe<StatsData> statsData;
+  final Optional<StatsData> statsData;
   final bool isLoading;
 
   StatsState({
@@ -27,7 +27,7 @@ class StatsState extends $StatsState {
 
   factory StatsState.initial() {
     return StatsState(
-      statsData: Maybe.none(),
+      statsData: Optional.none(),
       isLoading: false,
     );
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
-import 'package:fun_arch_todo_flutter/utils/maybe.dart';
-import 'package:todos_app_core/todos_app_core.dart';
+import 'package:plain_optional/plain_optional.dart';
+import 'package:todos_app_core/todos_app_core.dart' hide Optional;
 
 typedef OnSaveCallback = Function(String task, String note);
 
 class AddEditScreen extends StatefulWidget {
-  final Maybe<Todo> todo;
+  final Optional<Todo> todo;
   final OnSaveCallback onSave;
 
   AddEditScreen({
@@ -26,12 +26,12 @@ class _AddEditScreenState extends State<AddEditScreen> {
   String _task;
   String _note;
 
-  bool get isEditing => widget.todo.inSome;
+  bool get isEditing => widget.todo.hasValue;
 
   @override
   void initState() {
-    _task = widget.todo.map((t) => t.task).orElse("");
-    _note = widget.todo.map((t) => t.note).orElse("");
+    _task = widget.todo.map((t) => t.task).valueOr(() => "");
+    _note = widget.todo.map((t) => t.note).valueOr(() => "");
 
     super.initState();
   }

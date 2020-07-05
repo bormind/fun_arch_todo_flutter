@@ -26,6 +26,12 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   functional_data: ^0.3.0
+  # plain optional used by functional_data
+  # we will us same implementation to avoid usage of multiple optionals
+  # because there is an  Optional implementation in todos_app_core we will hide it by using
+  # import 'package:todos_app_core/todos_app_core.dart' hide Optional;
+  # syntax
+  plain_optional: ^0.1.3
 
 dependency_overrides:
   todos_app_core:

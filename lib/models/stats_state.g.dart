@@ -47,9 +47,9 @@ class StatsData$ {
 // ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $StatsState {
   const $StatsState();
-  Maybe<StatsData> get statsData;
+  Optional<StatsData> get statsData;
   bool get isLoading;
-  StatsState copyWith({Maybe<StatsData> statsData, bool isLoading}) =>
+  StatsState copyWith({Optional<StatsData> statsData, bool isLoading}) =>
       StatsState(
           statsData: statsData ?? this.statsData,
           isLoading: isLoading ?? this.isLoading);
@@ -71,7 +71,7 @@ abstract class $StatsState {
 }
 
 class StatsState$ {
-  static final statsData = Lens<StatsState, Maybe<StatsData>>(
+  static final statsData = Lens<StatsState, Optional<StatsData>>(
       (s_) => s_.statsData,
       (s_, statsData) => s_.copyWith(statsData: statsData));
   static final isLoading = Lens<StatsState, bool>((s_) => s_.isLoading,

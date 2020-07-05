@@ -5,8 +5,8 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:fun_arch_todo_flutter/utils/maybe.dart';
-import 'package:todos_app_core/todos_app_core.dart';
+import 'package:plain_optional/plain_optional.dart';
+import 'package:todos_app_core/todos_app_core.dart' hide Optional;
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -72,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
             onSave: (task, note) {
               Env.store.dispatch(UpdateTodo(todo.id, task, note));
             },
-            todo: Maybe.some(todo),
+            todo: Optional(todo),
           );
         },
       ),
@@ -82,7 +82,7 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = ArchSampleLocalizations.of(context);
-    return ConnectState<Maybe<Todo>>(
+    return ConnectState<Optional<Todo>>(
       map: (state) => state.todosState.selectedTodo,
       where: notEqual,
       builder: (todo) => Scaffold(
@@ -98,19 +98,18 @@ class DetailsScreen extends StatelessWidget {
                           Env.store.dispatch(DeleteTodo(td.id));
                           Navigator.pop(context, todo);
                         })
-                    .orElse(null))
+                    .valueOr(() => null))
           ],
         ),
-        body: todo
-            .map((td) => _renderDetails(context, td))
-            .orElse(Container(key: FlutterTodosKeys.emptyDetailsContainer)),
+        body: todo.map((td) => _renderDetails(context, td)).valueOr(
+            () => Container(key: FlutterTodosKeys.emptyDetailsContainer)),
         floatingActionButton: FloatingActionButton(
           key: ArchSampleKeys.editTodoFab,
           tooltip: localizations.editTodo,
           child: Icon(Icons.edit),
           onPressed: todo
               .map((td) => () => this._onEditTodo(context, td))
-              .orElse(null),
+              .valueOr(() => null),
         ),
       ),
     );

@@ -3,7 +3,7 @@ import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
-import 'package:fun_arch_todo_flutter/utils/maybe.dart';
+import 'package:plain_optional/plain_optional.dart';
 
 abstract class Action {
   AppState updateState(AppState appState);
@@ -159,7 +159,7 @@ class SelectTodo implements Action {
   AppState updateState(AppState appState) {
     return _updateTodoState(
       appState,
-      (todosState) => todosState.copyWith(selectedTodoId: Maybe.some(todoId)),
+      (todosState) => todosState.copyWith(selectedTodoId: Optional(todoId)),
     );
   }
 }
@@ -169,7 +169,7 @@ class ClearSelection implements Action {
   AppState updateState(AppState appState) {
     return _updateTodoState(
       appState,
-      (todosState) => todosState.copyWith(selectedTodoId: Maybe.none()),
+      (todosState) => todosState.copyWith(selectedTodoId: Optional.none()),
     );
   }
 }
