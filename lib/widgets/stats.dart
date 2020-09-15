@@ -5,7 +5,6 @@ import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/stats_state.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
-import 'package:todos_app_core/todos_app_core.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
@@ -19,7 +18,7 @@ class Stats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
-              ArchSampleLocalizations.of(context).completedTodos,
+              'Completed Todos',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
@@ -27,14 +26,13 @@ class Stats extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
               '${statsData.numCompleted}',
-              key: ArchSampleKeys.statsNumCompleted,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
-              ArchSampleLocalizations.of(context).activeTodos,
+              'Active Todos',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
@@ -42,7 +40,6 @@ class Stats extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
               "${statsData.numActive}",
-              key: ArchSampleKeys.statsNumActive,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           )

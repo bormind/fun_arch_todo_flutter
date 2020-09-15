@@ -13,7 +13,7 @@ class AppStore {
     return _stateSubject.value;
   }
 
-  Observable<AppState> get state$ {
+  Stream<AppState> get state$ {
     return _stateSubject;
   }
 

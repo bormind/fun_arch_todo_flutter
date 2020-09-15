@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:todos_app_core/todos_app_core.dart';
-import 'package:todos_repository_core/todos_repository_core.dart';
+import 'package:fun_arch_todo_flutter/arch_samples/todo_entity.dart';
 
 import 'package:functional_data/functional_data.dart';
+import 'package:uuid/uuid.dart';
 
 part 'todo.g.dart';
 
@@ -21,13 +21,11 @@ class Todo extends $Todo {
   });
 
   static Todo newTask(String task) {
-    return Todo(
-        task: task, note: '', id: Uuid().generateV4(), completed: false);
+    return Todo(task: task, note: '', id: Uuid().v4(), completed: false);
   }
 
   static Todo newTote(String task, String note) {
-    return Todo(
-        task: task, note: note, id: Uuid().generateV4(), completed: false);
+    return Todo(task: task, note: note, id: Uuid().v4(), completed: false);
   }
 
   static Todo fromEntity(TodoEntity entity) {
@@ -35,7 +33,7 @@ class Todo extends $Todo {
       task: entity.task,
       completed: entity.complete ?? false,
       note: entity.note,
-      id: entity.id ?? Uuid().generateV4(),
+      id: entity.id ?? Uuid().v4(),
     );
   }
 

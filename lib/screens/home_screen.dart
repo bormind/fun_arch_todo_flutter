@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fun_arch_todo_flutter/arch_samples/routes.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/screens/todos_screen.dart';
@@ -8,11 +9,10 @@ import 'package:fun_arch_todo_flutter/widgets/extra_actions.dart';
 import 'package:fun_arch_todo_flutter/widgets/filter_button.dart';
 import 'package:fun_arch_todo_flutter/widgets/stats.dart';
 import 'package:fun_arch_todo_flutter/widgets/tab_selector.dart';
-import 'package:todos_app_core/todos_app_core.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen() : super(key: ArchSampleKeys.homeScreen);
+  HomeScreen();
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -43,12 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: activeTab == AppTab.todos ? TodosScreen() : Stats(),
           floatingActionButton: FloatingActionButton(
-            key: ArchSampleKeys.addTodoFab,
             onPressed: () {
               Navigator.pushNamed(context, ArchSampleRoutes.addTodo);
             },
             child: Icon(Icons.add),
-            tooltip: ArchSampleLocalizations.of(context).addTodo,
+            tooltip: "Add Todo",
           ),
           bottomNavigationBar: TabSelector(
             activeTab: activeTab,

@@ -5,9 +5,8 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:plain_optional/plain_optional.dart';
-import 'package:todos_app_core/todos_app_core.dart' hide Optional;
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
+import 'package:plain_optional/plain_optional.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen();
@@ -43,14 +42,12 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         child: Text(
                           todo.task,
-                          key: ArchSampleKeys.detailsTodoItemTask,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
                     ),
                     Text(
                       todo.note,
-                      key: ArchSampleKeys.detailsTodoItemNote,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ],
@@ -68,7 +65,6 @@ class DetailsScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) {
           return AddEditScreen(
-            key: ArchSampleKeys.editTodoScreen,
             onSave: (task, note) {
               Env.store.dispatch(UpdateTodo(todo.id, task, note));
             },
@@ -81,17 +77,15 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ArchSampleLocalizations.of(context);
     return ConnectState<Optional<Todo>>(
       map: (state) => state.todosState.selectedTodo,
       where: notEqual,
       builder: (todo) => Scaffold(
         appBar: AppBar(
-          title: Text(localizations.todoDetails),
+          title: Text('Todo Details'),
           actions: [
             IconButton(
-                tooltip: localizations.deleteTodo,
-                key: ArchSampleKeys.deleteTodoButton,
+                tooltip: 'Delete Todo',
                 icon: Icon(Icons.delete),
                 onPressed: todo
                     .map((td) => () {
@@ -104,8 +98,7 @@ class DetailsScreen extends StatelessWidget {
         body: todo.map((td) => _renderDetails(context, td)).valueOr(
             () => Container(key: FlutterTodosKeys.emptyDetailsContainer)),
         floatingActionButton: FloatingActionButton(
-          key: ArchSampleKeys.editTodoFab,
-          tooltip: localizations.editTodo,
+          tooltip: 'Edit Todo',
           child: Icon(Icons.edit),
           onPressed: todo
               .map((td) => () => this._onEditTodo(context, td))

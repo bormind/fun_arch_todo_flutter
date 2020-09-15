@@ -14,16 +14,16 @@ description: Reference Flutter Architecture in TODOgit push implementation.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  equatable: ^0.2.0
+  equatable: ^1.2.5
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.0
 
   functional_data: ^0.3.0
   # plain optional used by functional_data
@@ -33,22 +33,27 @@ dependencies:
   # syntax
   plain_optional: ^0.1.3
 
-dependency_overrides:
-  todos_app_core:
-    git:
-      url: https://github.com/felangel/flutter_architecture_samples
-      path: todos_app_core
-      ref: expose-repositories
-  todos_repository_core:
-    git:
-      url: https://github.com/felangel/flutter_architecture_samples
-      path: todos_repository_core
-      ref: expose-repositories
-  todos_repository_simple:
-    git:
-      url: https://github.com/felangel/flutter_architecture_samples
-      path: todos_repository_simple
-      ref: expose-repositories
+  path_provider: ^1.6.14
+
+  uuid: ^2.2.2
+
+  rxdart: ^0.24.1
+#dependency_overrides:
+#  todos_app_core:
+#    git:
+#      url: https://github.com/brianegan/flutter_architecture_samples
+#      path: todos_app_core
+#      ref: expose-repositories
+#  todos_repository_core:
+#    git:
+#      url: https://github.com/brianegan/flutter_architecture_samples
+#      path: todos_repository_core
+#      ref: expose-repositories
+#  todos_repository_simple:
+#    git:
+#      url: https://github.com/brianegan/flutter_architecture_samples
+#      path: todos_repository_simple
+#      ref: expose-repositories
 
 
 dev_dependencies:

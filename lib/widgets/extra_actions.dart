@@ -8,10 +8,9 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
-import 'package:todos_app_core/todos_app_core.dart';
 
 class ExtraActions extends StatelessWidget {
-  ExtraActions({Key key}) : super(key: ArchSampleKeys.extraActionsButton);
+  ExtraActions({Key key}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +44,15 @@ class ExtraActions extends StatelessWidget {
             },
             itemBuilder: (BuildContext context) => <PopupMenuItem<ExtraAction>>[
               PopupMenuItem<ExtraAction>(
-                key: ArchSampleKeys.toggleAll,
                 value: ExtraAction.toggleAllComplete,
                 child: Text(
-                  allComplete
-                      ? ArchSampleLocalizations.of(context).markAllIncomplete
-                      : ArchSampleLocalizations.of(context).markAllComplete,
+                  allComplete ? 'Mark all incomplete' : 'Mark all complete',
                 ),
               ),
               PopupMenuItem<ExtraAction>(
-                key: ArchSampleKeys.clearCompleted,
                 value: ExtraAction.clearCompleted,
                 child: Text(
-                  ArchSampleLocalizations.of(context).clearCompleted,
+                  'Clear Completed',
                 ),
               ),
             ],

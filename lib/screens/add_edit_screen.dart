@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:plain_optional/plain_optional.dart';
-import 'package:todos_app_core/todos_app_core.dart' hide Optional;
 
 typedef OnSaveCallback = Function(String task, String note);
 
@@ -11,10 +10,9 @@ class AddEditScreen extends StatefulWidget {
   final OnSaveCallback onSave;
 
   AddEditScreen({
-    Key key,
     @required this.todo,
     @required this.onSave,
-  }) : super(key: key ?? ArchSampleKeys.addTodoScreen);
+  });
 
   @override
   _AddEditScreenState createState() => _AddEditScreenState();
@@ -38,13 +36,12 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ArchSampleLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isEditing ? localizations.editTodo : localizations.addTodo,
+          isEditing ? "Edit Todo" : "Add Todo",
         ),
       ),
       body: Padding(
@@ -55,26 +52,22 @@ class _AddEditScreenState extends State<AddEditScreen> {
             children: [
               TextFormField(
                 initialValue: _task,
-                key: ArchSampleKeys.taskField,
                 autofocus: !isEditing,
                 style: textTheme.headline5,
                 decoration: InputDecoration(
-                  hintText: localizations.newTodoHint,
+                  hintText: 'What needs to be done?',
                 ),
                 validator: (val) {
-                  return val.trim().isEmpty
-                      ? localizations.emptyTodoError
-                      : null;
+                  return val.trim().isEmpty ? 'Please enter some text' : null;
                 },
                 onSaved: (value) => _task = value,
               ),
               TextFormField(
                 initialValue: _note,
-                key: ArchSampleKeys.noteField,
                 maxLines: 10,
                 style: textTheme.subtitle1,
                 decoration: InputDecoration(
-                  hintText: localizations.notesHint,
+                  hintText: 'Additional Notes...',
                 ),
                 onSaved: (value) => _note = value,
               )
@@ -83,9 +76,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        key:
-            isEditing ? ArchSampleKeys.saveTodoFab : ArchSampleKeys.saveNewTodo,
-        tooltip: isEditing ? localizations.saveChanges : localizations.addTodo,
+        tooltip: isEditing ? 'Save changes' : 'Add Todo',
         child: Icon(isEditing ? Icons.check : Icons.add),
         onPressed: () {
           if (_formKey.currentState.validate()) {
