@@ -41,9 +41,8 @@ class MarkCompletion implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens
-        .of(appState)
-        .map(_updateTodos((todo) => todo.copyWith(completed: isCompleted)));
+    return _todosLens.of(appState).map(
+        _updateTodo(todoId, (todo) => todo.copyWith(completed: isCompleted)));
   }
 }
 
