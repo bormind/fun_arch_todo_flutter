@@ -8,8 +8,6 @@ import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
-  Stats({Key key}) : super(key: key);
-
   Widget _renderStatsData(BuildContext context, StatsData statsData) {
     return Center(
       child: Column(

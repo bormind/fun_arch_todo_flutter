@@ -22,6 +22,11 @@ class FileStorage implements TodosRepository {
   @override
   Future<List<TodoEntity>> loadTodos() async {
     final file = await _getLocalFile();
+
+    if (!file.existsSync()) {
+      return Future.value([]);
+    }
+
     final string = await file.readAsString();
     final json = JsonDecoder().convert(string);
     final todos = (json['todos'])
