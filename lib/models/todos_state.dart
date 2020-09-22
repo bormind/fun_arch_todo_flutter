@@ -43,6 +43,14 @@ class TodosState extends $TodosState {
     return selectedTodoId.map((todoId) => this.todos[todoId]);
   }
 
+  int get numCompleted {
+    return todos.values.where((item) => item.completed).length;
+  }
+
+  int get numActive {
+    return todos.values.where((item) => !item.completed).length;
+  }
+
   factory TodosState.initial() {
     return TodosState(
       todos: new LinkedHashMap(),

@@ -171,3 +171,19 @@ class SetTodos implements Action {
       ..addEntries(list.map((todo) => MapEntry(todo.id, todo))));
   }
 }
+
+class SetLoading implements Action {
+  final bool isLoading;
+
+  SetLoading(this.isLoading);
+
+  @override
+  AppState updateState(AppState appState) {
+    print(">>> Is Loading: $isLoading");
+
+    return AppState$.todosState
+        .then(TodosState$.isLoading)
+        .of(appState)
+        .update(isLoading);
+  }
+}

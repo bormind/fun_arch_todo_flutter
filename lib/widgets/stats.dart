@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
-import 'package:fun_arch_todo_flutter/models/stats_state.dart';
+import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
-  Widget _renderStatsData(BuildContext context, StatsData statsData) {
+  Widget _renderStats(BuildContext context, TodosState todosState) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +22,7 @@ class Stats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              '${statsData.numCompleted}',
+              '${todosState.numCompleted}',
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -37,7 +36,7 @@ class Stats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              "${statsData.numActive}",
+              "${todosState.numActive}",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           )
@@ -48,15 +47,13 @@ class Stats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<StatsState>(
-      map: (state) => state.statsState,
+    return ConnectState<TodosState>(
+      map: (state) => state.todosState,
       where: notIdentical,
-      builder: (stats) {
-        return stats.isLoading
+      builder: (todosState) {
+        return todosState.isLoading
             ? LoadingIndicator(key: FlutterTodosKeys.statsLoadingIndicator)
-            : stats.statsData
-                .map((statsData) => _renderStatsData(context, statsData))
-                .valueOr(() => SizedBox());
+            : _renderStats(context, todosState);
       },
     );
   }

@@ -14,7 +14,13 @@ class Fetcher {
   });
 
   Future<void> loadTodos() {
-    return todoRepo.loadTodos().then(
-        (entities) => store.dispatch(SetTodos(entities.map(Todo.fromEntity))));
+    store.dispatch(SetLoading(true));
+    return todoRepo
+        .loadTodos()
+        .then((entities) =>
+            store.dispatch(SetTodos(entities.map(Todo.fromEntity))))
+        .whenComplete(() {
+      store.dispatch(SetLoading(false));
+    });
   }
 }
