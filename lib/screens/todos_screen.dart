@@ -39,14 +39,9 @@ class TodosScreen extends StatelessWidget {
                   ));
                 },
                 onTap: () async {
-                  Env.store.dispatch(SelectTodo(todo.id));
-
                   final removedTodo = await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => DetailsScreen()),
+                    MaterialPageRoute(builder: (_) => DetailsScreen(todo)),
                   );
-
-                  print(">>> Cleared todo selection");
-                  Env.store.dispatch(ClearSelection());
 
                   if (removedTodo != null) {
                     Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(

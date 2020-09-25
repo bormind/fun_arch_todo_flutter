@@ -17,12 +17,10 @@ class _$TodosStateTearOff {
   _TodosState call(
       {@required KtMap<String, Todo> todos,
       @required VisibilityFilter visibilityFilter,
-      @required Option<String> selectedTodoId,
       @required bool isLoading}) {
     return _TodosState(
       todos: todos,
       visibilityFilter: visibilityFilter,
-      selectedTodoId: selectedTodoId,
       isLoading: isLoading,
     );
   }
@@ -36,7 +34,6 @@ const $TodosState = _$TodosStateTearOff();
 mixin _$TodosState {
   KtMap<String, Todo> get todos;
   VisibilityFilter get visibilityFilter;
-  Option<String> get selectedTodoId;
   bool get isLoading;
 
   $TodosStateCopyWith<TodosState> get copyWith;
@@ -50,7 +47,6 @@ abstract class $TodosStateCopyWith<$Res> {
   $Res call(
       {KtMap<String, Todo> todos,
       VisibilityFilter visibilityFilter,
-      Option<String> selectedTodoId,
       bool isLoading});
 }
 
@@ -66,7 +62,6 @@ class _$TodosStateCopyWithImpl<$Res> implements $TodosStateCopyWith<$Res> {
   $Res call({
     Object todos = freezed,
     Object visibilityFilter = freezed,
-    Object selectedTodoId = freezed,
     Object isLoading = freezed,
   }) {
     return _then(_value.copyWith(
@@ -74,9 +69,6 @@ class _$TodosStateCopyWithImpl<$Res> implements $TodosStateCopyWith<$Res> {
       visibilityFilter: visibilityFilter == freezed
           ? _value.visibilityFilter
           : visibilityFilter as VisibilityFilter,
-      selectedTodoId: selectedTodoId == freezed
-          ? _value.selectedTodoId
-          : selectedTodoId as Option<String>,
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
     ));
   }
@@ -91,7 +83,6 @@ abstract class _$TodosStateCopyWith<$Res> implements $TodosStateCopyWith<$Res> {
   $Res call(
       {KtMap<String, Todo> todos,
       VisibilityFilter visibilityFilter,
-      Option<String> selectedTodoId,
       bool isLoading});
 }
 
@@ -109,7 +100,6 @@ class __$TodosStateCopyWithImpl<$Res> extends _$TodosStateCopyWithImpl<$Res>
   $Res call({
     Object todos = freezed,
     Object visibilityFilter = freezed,
-    Object selectedTodoId = freezed,
     Object isLoading = freezed,
   }) {
     return _then(_TodosState(
@@ -117,9 +107,6 @@ class __$TodosStateCopyWithImpl<$Res> extends _$TodosStateCopyWithImpl<$Res>
       visibilityFilter: visibilityFilter == freezed
           ? _value.visibilityFilter
           : visibilityFilter as VisibilityFilter,
-      selectedTodoId: selectedTodoId == freezed
-          ? _value.selectedTodoId
-          : selectedTodoId as Option<String>,
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
     ));
   }
@@ -130,19 +117,15 @@ class _$_TodosState implements _TodosState {
   _$_TodosState(
       {@required this.todos,
       @required this.visibilityFilter,
-      @required this.selectedTodoId,
       @required this.isLoading})
       : assert(todos != null),
         assert(visibilityFilter != null),
-        assert(selectedTodoId != null),
         assert(isLoading != null);
 
   @override
   final KtMap<String, Todo> todos;
   @override
   final VisibilityFilter visibilityFilter;
-  @override
-  final Option<String> selectedTodoId;
   @override
   final bool isLoading;
 
@@ -161,18 +144,6 @@ class _$_TodosState implements _TodosState {
               (!td.completed && visibilityFilter == VisibilityFilter.active));
     }
     return _visibleTodos;
-  }
-
-  bool _didselectedTodo = false;
-  Option<Todo> _selectedTodo;
-
-  @override
-  Option<Todo> get selectedTodo {
-    if (_didselectedTodo == false) {
-      _didselectedTodo = true;
-      _selectedTodo = selectedTodoId.map((todoId) => this.todos[todoId]);
-    }
-    return _selectedTodo;
   }
 
   bool _didnumCompleted = false;
@@ -201,7 +172,7 @@ class _$_TodosState implements _TodosState {
 
   @override
   String toString() {
-    return 'TodosState(todos: $todos, visibilityFilter: $visibilityFilter, selectedTodoId: $selectedTodoId, isLoading: $isLoading, visibleTodos: $visibleTodos, selectedTodo: $selectedTodo, numCompleted: $numCompleted, numActive: $numActive)';
+    return 'TodosState(todos: $todos, visibilityFilter: $visibilityFilter, isLoading: $isLoading, visibleTodos: $visibleTodos, numCompleted: $numCompleted, numActive: $numActive)';
   }
 
   @override
@@ -213,9 +184,6 @@ class _$_TodosState implements _TodosState {
             (identical(other.visibilityFilter, visibilityFilter) ||
                 const DeepCollectionEquality()
                     .equals(other.visibilityFilter, visibilityFilter)) &&
-            (identical(other.selectedTodoId, selectedTodoId) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectedTodoId, selectedTodoId)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoading, isLoading)));
@@ -226,7 +194,6 @@ class _$_TodosState implements _TodosState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(todos) ^
       const DeepCollectionEquality().hash(visibilityFilter) ^
-      const DeepCollectionEquality().hash(selectedTodoId) ^
       const DeepCollectionEquality().hash(isLoading);
 
   @override
@@ -238,15 +205,12 @@ abstract class _TodosState implements TodosState {
   factory _TodosState(
       {@required KtMap<String, Todo> todos,
       @required VisibilityFilter visibilityFilter,
-      @required Option<String> selectedTodoId,
       @required bool isLoading}) = _$_TodosState;
 
   @override
   KtMap<String, Todo> get todos;
   @override
   VisibilityFilter get visibilityFilter;
-  @override
-  Option<String> get selectedTodoId;
   @override
   bool get isLoading;
   @override

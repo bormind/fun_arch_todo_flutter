@@ -119,24 +119,6 @@ class AddTodo implements Action {
   }
 }
 
-class SelectTodo implements Action {
-  final String todoId;
-
-  SelectTodo(this.todoId);
-
-  @override
-  AppState updateState(AppState appState) {
-    return appState.copyWith.todosState(selectedTodoId: Some(todoId));
-  }
-}
-
-class ClearSelection implements Action {
-  @override
-  AppState updateState(AppState appState) {
-    return appState.copyWith.todosState(selectedTodoId: None());
-  }
-}
-
 class SetTodos implements Action {
   final Iterable<Todo> list;
 

@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
-import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
-import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen();
+  final Todo todo;
+
+  const DetailsScreen(this.todo);
 
   Widget _renderDetails(BuildContext context, Todo todo) {
     return Padding(
@@ -77,34 +76,23 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<Option<Todo>>(
-      map: (state) => state.todosState.selectedTodo,
-      where: notEqual,
-      builder: (todo) => Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('Todo Details'),
           actions: [
             IconButton(
                 tooltip: 'Delete Todo',
                 icon: Icon(Icons.delete),
-                onPressed: todo
-                    .map((td) => () {
-                          Env.store.dispatch(DeleteTodo(td.id));
-                          Navigator.pop(context, todo);
-                        })
-                    .getOrElse(() => null))
+                onPressed: () {
+                  Env.store.dispatch(DeleteTodo(todo.id));
+                  Navigator.pop(context, todo);
+                })
           ],
         ),
-        body: todo.map((td) => _renderDetails(context, td)).getOrElse(
-            () => Container(key: FlutterTodosKeys.emptyDetailsContainer)),
+        body: _renderDetails(context, todo),
         floatingActionButton: FloatingActionButton(
-          tooltip: 'Edit Todo',
-          child: Icon(Icons.edit),
-          onPressed: todo
-              .map((td) => () => this._onEditTodo(context, td))
-              .getOrElse(() => null),
-        ),
-      ),
-    );
+            tooltip: 'Edit Todo',
+            child: Icon(Icons.edit),
+            onPressed: () => this._onEditTodo(context, todo)));
   }
 }

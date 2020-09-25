@@ -14,7 +14,6 @@ abstract class TodosState with _$TodosState {
   factory TodosState({
     @required KtMap<String, Todo> todos,
     @required VisibilityFilter visibilityFilter,
-    @required Option<String> selectedTodoId,
     @required bool isLoading,
   }) = _TodosState;
 
@@ -26,10 +25,6 @@ abstract class TodosState with _$TodosState {
           (!td.completed && visibilityFilter == VisibilityFilter.active));
 
   @late
-  Option<Todo> get selectedTodo =>
-      selectedTodoId.map((todoId) => this.todos[todoId]);
-
-  @late
   int get numCompleted => todos.values.filter((item) => item.completed).size;
 
   @late
@@ -38,7 +33,6 @@ abstract class TodosState with _$TodosState {
   factory TodosState.initial() => TodosState(
         todos: KtLinkedMap.empty(),
         visibilityFilter: VisibilityFilter.all,
-        selectedTodoId: None(),
         isLoading: false,
       );
 }
