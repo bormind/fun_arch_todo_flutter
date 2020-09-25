@@ -1,36 +1,16 @@
+import 'package:dartz/dartz.dart';
 import 'package:fun_arch_todo_flutter/models/app_state.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
-import 'package:fun_arch_todo_flutter/models/todos_state.dart';
-import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
-import 'package:plain_optional/plain_optional.dart';
-import 'package:fun_arch_todo_flutter/utils/map_extensions.dart';
 
-typedef Map<String, Todo> TodosUpdate(Map<String, Todo> todos);
+import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
+import 'package:fun_arch_todo_flutter/utils/map_extensions.dart';
+import 'package:kt_dart/kt.dart';
+
+typedef AppState UpdateState(AppState appState);
 
 abstract class Action {
   AppState updateState(AppState appState);
-}
-
-final _todosLens = AppState$.todosState.then(TodosState$.todos);
-
-TodosUpdate _updateTodos(Todo update(Todo todo)) {
-  return (originalMap) =>
-      originalMap.map((key, todo) => MapEntry(key, update(todo)));
-}
-
-TodosUpdate _updateTodo(String key, Todo update(Todo todo)) {
-  return (originalMap) {
-    if (!originalMap.containsKey(key)) {
-      return originalMap;
-    }
-
-    return originalMap.clone()..[key] = update(originalMap[key]);
-  };
-}
-
-TodosUpdate _deleteTodo(String key) {
-  return (originalMap) => originalMap.clone()..remove(key);
 }
 
 class MarkCompletion implements Action {
@@ -41,8 +21,9 @@ class MarkCompletion implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens.of(appState).map(
-        _updateTodo(todoId, (todo) => todo.copyWith(completed: isCompleted)));
+    final updatedTodos = appState.todosState.todos
+        .update(todoId, (todo) => todo.copyWith(completed: isCompleted));
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
@@ -53,7 +34,8 @@ class DeleteTodo implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens.of(appState).map(_deleteTodo(todoId));
+    final deleted = appState.todosState.todos.delete(todoId);
+    return appState.copyWith.todosState(todos: deleted);
   }
 }
 
@@ -66,8 +48,9 @@ class UpdateTodo implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens.of(appState).map(
-        _updateTodo(todoId, (todo) => todo.copyWith(task: task, note: notes)));
+    final updatedTodos = appState.todosState.todos
+        .update(todoId, (todo) => todo.copyWith(task: task, note: notes));
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
@@ -84,8 +67,6 @@ class SetActiveTab implements Action {
 
 class SetVisibilityFilter implements Action {
   final VisibilityFilter visibilityFilter;
-  final visibilityFilterLens =
-      AppState$.todosState.then(TodosState$.visibilityFilter);
 
   SetVisibilityFilter(this.visibilityFilter);
 
@@ -95,33 +76,34 @@ class SetVisibilityFilter implements Action {
       return appState;
     }
 
-    return visibilityFilterLens.of(appState).update(visibilityFilter);
+    return appState.copyWith.todosState(visibilityFilter: visibilityFilter);
   }
 }
 
 class ClearCompleted implements Action {
   @override
   AppState updateState(AppState appState) {
-    return _todosLens.of(appState).map((originalTodos) =>
-        originalTodos.clone()..removeWhere((_, todo) => todo.completed));
+    final updatedTodos =
+        appState.todosState.todos.filterValues((todo) => !todo.completed);
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
 class CompleteAll implements Action {
   @override
   AppState updateState(AppState appState) {
-    return _todosLens
-        .of(appState)
-        .map(_updateTodos((todo) => todo.copyWith(completed: true)));
+    final updatedTodos = appState.todosState.todos
+        .mapValues((entry) => entry.value.copyWith(completed: true));
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
 class UnCompleteAll implements Action {
   @override
   AppState updateState(AppState appState) {
-    return _todosLens
-        .of(appState)
-        .map(_updateTodos((todo) => todo.copyWith(completed: false)));
+    final updatedTodos = appState.todosState.todos
+        .mapValues((entry) => entry.value.copyWith(completed: false));
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
@@ -132,9 +114,8 @@ class AddTodo implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens
-        .of(appState)
-        .map((originalTodos) => originalTodos.clone()..[todo.id] = todo);
+    final updatedTodos = appState.todosState.todos.put(todo.id, todo);
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
@@ -145,18 +126,14 @@ class SelectTodo implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return AppState$.todosState.map(
-        (todosState) => todosState.copyWith(selectedTodoId: Optional(todoId)),
-        appState);
+    return appState.copyWith.todosState(selectedTodoId: Some(todoId));
   }
 }
 
 class ClearSelection implements Action {
   @override
   AppState updateState(AppState appState) {
-    return AppState$.todosState.map(
-        (todosState) => todosState.copyWith(selectedTodoId: Optional.none()),
-        appState);
+    return appState.copyWith.todosState(selectedTodoId: None());
   }
 }
 
@@ -167,8 +144,9 @@ class SetTodos implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    return _todosLens.of(appState).map((originalTodos) => originalTodos.clone()
-      ..addEntries(list.map((todo) => MapEntry(todo.id, todo))));
+    final updatedTodos = appState.todosState.todos
+        .putAll(listFrom(list).associateBy((todo) => todo.id));
+    return appState.copyWith.todosState(todos: updatedTodos);
   }
 }
 
@@ -179,11 +157,6 @@ class SetLoading implements Action {
 
   @override
   AppState updateState(AppState appState) {
-    print(">>> Is Loading: $isLoading");
-
-    return AppState$.todosState
-        .then(TodosState$.isLoading)
-        .of(appState)
-        .update(isLoading);
+    return appState.copyWith.todosState(isLoading: isLoading);
   }
 }

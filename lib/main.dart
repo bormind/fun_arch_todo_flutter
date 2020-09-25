@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/arch_samples/routes.dart';
 import 'package:fun_arch_todo_flutter/arch_samples/theme.dart';
@@ -7,7 +8,6 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/screens/home_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
-import 'package:plain_optional/plain_optional.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -22,7 +22,7 @@ void main() {
         },
         ArchSampleRoutes.addTodo: (context) {
           return AddEditScreen(
-            todo: Optional.none(),
+            todo: None(),
             onSave: (task, note) {
               Env.store.dispatch(AddTodo(Todo.newTote(task, note)));
             },

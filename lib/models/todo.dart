@@ -1,24 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:fun_arch_todo_flutter/arch_samples/todo_entity.dart';
-
-import 'package:functional_data/functional_data.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
-part 'todo.g.dart';
+part 'todo.freezed.dart';
 
-@FunctionalData()
-class Todo extends $Todo {
-  final String task;
-  final String note;
-  final String id;
-  final bool completed;
-
-  const Todo({
-    @required this.task,
-    @required this.note,
-    @required this.id,
-    @required this.completed,
-  });
+@freezed
+abstract class Todo with _$Todo {
+  factory Todo({
+    @required String task,
+    @required String note,
+    @required String id,
+    @required bool completed,
+  }) = _Todo;
 
   static Todo newTask(String task) {
     return Todo(task: task, note: '', id: Uuid().v4(), completed: false);
@@ -36,8 +30,10 @@ class Todo extends $Todo {
       id: entity.id ?? Uuid().v4(),
     );
   }
+}
 
+extension TodoX on Todo {
   TodoEntity toEntity() {
-    return TodoEntity(task, id, note, completed);
+    return TodoEntity(this.task, this.id, this.note, this.completed);
   }
 }

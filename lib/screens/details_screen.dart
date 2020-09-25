@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
@@ -6,7 +7,6 @@ import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
-import 'package:plain_optional/plain_optional.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen();
@@ -68,7 +68,7 @@ class DetailsScreen extends StatelessWidget {
             onSave: (task, note) {
               Env.store.dispatch(UpdateTodo(todo.id, task, note));
             },
-            todo: Optional(todo),
+            todo: Some(todo),
           );
         },
       ),
@@ -77,7 +77,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<Optional<Todo>>(
+    return ConnectState<Option<Todo>>(
       map: (state) => state.todosState.selectedTodo,
       where: notEqual,
       builder: (todo) => Scaffold(
@@ -92,17 +92,17 @@ class DetailsScreen extends StatelessWidget {
                           Env.store.dispatch(DeleteTodo(td.id));
                           Navigator.pop(context, todo);
                         })
-                    .valueOr(() => null))
+                    .getOrElse(() => null))
           ],
         ),
-        body: todo.map((td) => _renderDetails(context, td)).valueOr(
+        body: todo.map((td) => _renderDetails(context, td)).getOrElse(
             () => Container(key: FlutterTodosKeys.emptyDetailsContainer)),
         floatingActionButton: FloatingActionButton(
           tooltip: 'Edit Todo',
           child: Icon(Icons.edit),
           onPressed: todo
               .map((td) => () => this._onEditTodo(context, td))
-              .valueOr(() => null),
+              .getOrElse(() => null),
         ),
       ),
     );

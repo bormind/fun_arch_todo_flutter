@@ -25,11 +25,10 @@ class TodosScreen extends StatelessWidget {
             return LoadingIndicator();
           }
 
-          final visibleTodos = todosState.visibleTodos.toList();
           return ListView.builder(
-            itemCount: visibleTodos.length,
+            itemCount: todosState.visibleTodos.size,
             itemBuilder: (BuildContext context, int index) {
-              final todo = visibleTodos[index];
+              final todo = todosState.visibleTodos[index];
               return TodoItem(
                 todo: todo,
                 onDismissed: (direction) {

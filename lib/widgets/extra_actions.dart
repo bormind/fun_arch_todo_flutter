@@ -8,21 +8,22 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
+import 'package:kt_dart/kt.dart';
 
 class ExtraActions extends StatelessWidget {
   ExtraActions({Key key}) : super();
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<Map<String, Todo>>(
+    return ConnectState<KtMap<String, Todo>>(
         map: (state) => state.todosState.todos,
         where: notIdentical,
         builder: (todos) {
-          if (todos.isEmpty) {
+          if (todos.isEmpty()) {
             return Container(key: FlutterTodosKeys.extraActionsEmptyContainer);
           }
 
-          final allComplete = todos.values.every((t) => t.completed);
+          final allComplete = todos.values.all((t) => t.completed);
 
           return PopupMenuButton<ExtraAction>(
             key: FlutterTodosKeys.extraActionsPopupMenuButton,
