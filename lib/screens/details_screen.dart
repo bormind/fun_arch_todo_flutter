@@ -1,14 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:fun_arch_todo_flutter/env.dart';
+
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
+import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
+import 'package:fun_arch_todo_flutter/store/connect_state.dart';
+import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final Todo todo;
+  final String todoId;
+  final _store = getIt<AppStore>();
 
-  const DetailsScreen(this.todo);
+  DetailsScreen(this.todoId);
 
   Widget _renderDetails(BuildContext context, Todo todo) {
     return Padding(
@@ -23,8 +28,7 @@ class DetailsScreen extends StatelessWidget {
                 child: Checkbox(
                     value: todo.completed,
                     onChanged: (_) {
-                      Env.store
-                          .dispatch(MarkCompletion(todo.id, !todo.completed));
+                      _store.dispatch(MarkCompletion(todo.id, !todo.completed));
                     }),
               ),
               Expanded(
@@ -65,7 +69,7 @@ class DetailsScreen extends StatelessWidget {
         builder: (context) {
           return AddEditScreen(
             onSave: (task, note) {
-              Env.store.dispatch(UpdateTodo(todo.id, task, note));
+              _store.dispatch(UpdateTodo(todo.id, task, note));
             },
             todo: Some(todo),
           );
@@ -76,23 +80,27 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Todo Details'),
-          actions: [
-            IconButton(
-                tooltip: 'Delete Todo',
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  Env.store.dispatch(DeleteTodo(todo.id));
-                  Navigator.pop(context, todo);
-                })
-          ],
-        ),
-        body: _renderDetails(context, todo),
-        floatingActionButton: FloatingActionButton(
-            tooltip: 'Edit Todo',
-            child: Icon(Icons.edit),
-            onPressed: () => this._onEditTodo(context, todo)));
+    return ConnectState<Todo>(
+      map: (state) => state.todosState.todos[todoId],
+      where: notIdentical,
+      builder: (todo) => Scaffold(
+          appBar: AppBar(
+            title: Text('Todo Details'),
+            actions: [
+              IconButton(
+                  tooltip: 'Delete Todo',
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    _store.dispatch(DeleteTodo(todo.id));
+                    Navigator.pop(context, todo);
+                  })
+            ],
+          ),
+          body: _renderDetails(context, todo),
+          floatingActionButton: FloatingActionButton(
+              tooltip: 'Edit Todo',
+              child: Icon(Icons.edit),
+              onPressed: () => this._onEditTodo(context, todo))),
+    );
   }
 }

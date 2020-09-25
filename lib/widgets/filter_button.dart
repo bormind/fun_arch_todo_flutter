@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
+import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class FilterButton extends StatelessWidget {
+  final _store = getIt<AppStore>();
   final bool visible;
 
   FilterButton({this.visible, Key key}) : super(key: key);
@@ -25,7 +27,7 @@ class FilterButton extends StatelessWidget {
 
         final button = _Button(
           onSelected: (filter) {
-            Env.store.dispatch(SetVisibilityFilter(filter));
+            _store.dispatch(SetVisibilityFilter(filter));
           },
           activeFilter: !todosState.isLoading
               ? todosState.visibilityFilter

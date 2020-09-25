@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/screens/details_screen.dart';
+import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:fun_arch_todo_flutter/widgets/delete_todo_snack_bar.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/widgets/todo_item.dart';
-import 'package:fun_arch_todo_flutter/env.dart';
 
 class TodosScreen extends StatelessWidget {
+  final _store = getIt<AppStore>();
+
   TodosScreen();
 
   @override
@@ -32,26 +35,26 @@ class TodosScreen extends StatelessWidget {
               return TodoItem(
                 todo: todo,
                 onDismissed: (direction) {
-                  Env.store.dispatch(DeleteTodo(todo.id));
+                  _store.dispatch(DeleteTodo(todo.id));
                   Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                     todo: todo,
-                    onUndo: () => Env.store.dispatch(AddTodo(todo)),
+                    onUndo: () => _store.dispatch(AddTodo(todo)),
                   ));
                 },
                 onTap: () async {
                   final removedTodo = await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => DetailsScreen(todo)),
+                    MaterialPageRoute(builder: (_) => DetailsScreen(todo.id)),
                   );
 
                   if (removedTodo != null) {
                     Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
                       todo: todo,
-                      onUndo: () => Env.store.dispatch(AddTodo(todo)),
+                      onUndo: () => _store.dispatch(AddTodo(todo)),
                     ));
                   }
                 },
                 onCheckboxChanged: (_) {
-                  Env.store.dispatch(MarkCompletion(todo.id, !todo.completed));
+                  _store.dispatch(MarkCompletion(todo.id, !todo.completed));
                 },
               );
             },

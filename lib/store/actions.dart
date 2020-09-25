@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:fun_arch_todo_flutter/models/app_state.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/extra_action.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:kt_dart/kt.dart';
 
 class ExtraActions extends StatelessWidget {
+  final _store = getIt<AppStore>();
+
   ExtraActions({Key key}) : super();
 
   @override
@@ -31,14 +34,14 @@ class ExtraActions extends StatelessWidget {
               switch (action) {
                 case ExtraAction.clearCompleted:
                   if (todos.values.any((t) => t.completed)) {
-                    Env.store.dispatch(ClearCompleted());
+                    _store.dispatch(ClearCompleted());
                   }
                   break;
                 case ExtraAction.toggleAllComplete:
                   if (allComplete) {
-                    Env.store.dispatch(UnCompleteAll());
+                    _store.dispatch(UnCompleteAll());
                   } else {
-                    Env.store.dispatch(CompleteAll());
+                    _store.dispatch(CompleteAll());
                   }
                   break;
               }
