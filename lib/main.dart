@@ -18,9 +18,6 @@ void main() {
 
   getIt<Fetcher>().loadTodosFromLocalStorage();
 
-  getIt<AppStore>().dispatch(AddTodo(
-      Todo(id: "123123123", task: "rrr", note: "dssdfgsdf", completed: false)));
-
   runApp(MaterialApp(
       title: AppLocalizations().appTitle,
       theme: ArchSampleTheme.theme,

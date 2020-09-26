@@ -6,8 +6,6 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 
 typedef OnSaveCallback = Function(String task, String note);
 
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 class AddEditScreen extends StatefulWidget {
   final Option<Todo> todo;
   final OnSaveCallback onSave;
@@ -22,6 +20,8 @@ class AddEditScreen extends StatefulWidget {
 }
 
 class _AddEditScreenState extends State<AddEditScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String _task;
   String _note;
 
@@ -29,8 +29,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   @override
   void initState() {
-    _task = widget.todo.map((t) => t.task).getOrElse(() => "asd");
-    _note = widget.todo.map((t) => t.note).getOrElse(() => "xcvxcv");
+    _task = widget.todo.map((t) => t.task).getOrElse(() => "");
+    _note = widget.todo.map((t) => t.note).getOrElse(() => "");
 
     super.initState();
   }
@@ -38,8 +38,6 @@ class _AddEditScreenState extends State<AddEditScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    print(">>> Rendering AddEdit <<");
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +48,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
-          // key: _formKey,
+          key: _formKey,
           child: ListView(
             children: [
               TextFormField(
