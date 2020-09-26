@@ -17,11 +17,13 @@ class _$TodosStateTearOff {
   _TodosState call(
       {@required KtMap<String, Todo> todos,
       @required VisibilityFilter visibilityFilter,
-      @required bool isLoading}) {
+      @required bool isLoading,
+      @required bool dataIsInitialized}) {
     return _TodosState(
       todos: todos,
       visibilityFilter: visibilityFilter,
       isLoading: isLoading,
+      dataIsInitialized: dataIsInitialized,
     );
   }
 }
@@ -34,7 +36,9 @@ const $TodosState = _$TodosStateTearOff();
 mixin _$TodosState {
   KtMap<String, Todo> get todos;
   VisibilityFilter get visibilityFilter;
-  bool get isLoading;
+  bool
+      get isLoading; // this is set updated every time we are in a process of loading data (to show spinner while loading)
+  bool get dataIsInitialized;
 
   $TodosStateCopyWith<TodosState> get copyWith;
 }
@@ -47,7 +51,8 @@ abstract class $TodosStateCopyWith<$Res> {
   $Res call(
       {KtMap<String, Todo> todos,
       VisibilityFilter visibilityFilter,
-      bool isLoading});
+      bool isLoading,
+      bool dataIsInitialized});
 }
 
 /// @nodoc
@@ -63,6 +68,7 @@ class _$TodosStateCopyWithImpl<$Res> implements $TodosStateCopyWith<$Res> {
     Object todos = freezed,
     Object visibilityFilter = freezed,
     Object isLoading = freezed,
+    Object dataIsInitialized = freezed,
   }) {
     return _then(_value.copyWith(
       todos: todos == freezed ? _value.todos : todos as KtMap<String, Todo>,
@@ -70,6 +76,9 @@ class _$TodosStateCopyWithImpl<$Res> implements $TodosStateCopyWith<$Res> {
           ? _value.visibilityFilter
           : visibilityFilter as VisibilityFilter,
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
+      dataIsInitialized: dataIsInitialized == freezed
+          ? _value.dataIsInitialized
+          : dataIsInitialized as bool,
     ));
   }
 }
@@ -83,7 +92,8 @@ abstract class _$TodosStateCopyWith<$Res> implements $TodosStateCopyWith<$Res> {
   $Res call(
       {KtMap<String, Todo> todos,
       VisibilityFilter visibilityFilter,
-      bool isLoading});
+      bool isLoading,
+      bool dataIsInitialized});
 }
 
 /// @nodoc
@@ -101,6 +111,7 @@ class __$TodosStateCopyWithImpl<$Res> extends _$TodosStateCopyWithImpl<$Res>
     Object todos = freezed,
     Object visibilityFilter = freezed,
     Object isLoading = freezed,
+    Object dataIsInitialized = freezed,
   }) {
     return _then(_TodosState(
       todos: todos == freezed ? _value.todos : todos as KtMap<String, Todo>,
@@ -108,6 +119,9 @@ class __$TodosStateCopyWithImpl<$Res> extends _$TodosStateCopyWithImpl<$Res>
           ? _value.visibilityFilter
           : visibilityFilter as VisibilityFilter,
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
+      dataIsInitialized: dataIsInitialized == freezed
+          ? _value.dataIsInitialized
+          : dataIsInitialized as bool,
     ));
   }
 }
@@ -117,10 +131,12 @@ class _$_TodosState implements _TodosState {
   _$_TodosState(
       {@required this.todos,
       @required this.visibilityFilter,
-      @required this.isLoading})
+      @required this.isLoading,
+      @required this.dataIsInitialized})
       : assert(todos != null),
         assert(visibilityFilter != null),
-        assert(isLoading != null);
+        assert(isLoading != null),
+        assert(dataIsInitialized != null);
 
   @override
   final KtMap<String, Todo> todos;
@@ -128,6 +144,8 @@ class _$_TodosState implements _TodosState {
   final VisibilityFilter visibilityFilter;
   @override
   final bool isLoading;
+  @override // this is set updated every time we are in a process of loading data (to show spinner while loading)
+  final bool dataIsInitialized;
 
   bool _didvisibleTodos = false;
   KtList<Todo> _visibleTodos;
@@ -172,7 +190,7 @@ class _$_TodosState implements _TodosState {
 
   @override
   String toString() {
-    return 'TodosState(todos: $todos, visibilityFilter: $visibilityFilter, isLoading: $isLoading, visibleTodos: $visibleTodos, numCompleted: $numCompleted, numActive: $numActive)';
+    return 'TodosState(todos: $todos, visibilityFilter: $visibilityFilter, isLoading: $isLoading, dataIsInitialized: $dataIsInitialized, visibleTodos: $visibleTodos, numCompleted: $numCompleted, numActive: $numActive)';
   }
 
   @override
@@ -186,7 +204,10 @@ class _$_TodosState implements _TodosState {
                     .equals(other.visibilityFilter, visibilityFilter)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
-                    .equals(other.isLoading, isLoading)));
+                    .equals(other.isLoading, isLoading)) &&
+            (identical(other.dataIsInitialized, dataIsInitialized) ||
+                const DeepCollectionEquality()
+                    .equals(other.dataIsInitialized, dataIsInitialized)));
   }
 
   @override
@@ -194,7 +215,8 @@ class _$_TodosState implements _TodosState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(todos) ^
       const DeepCollectionEquality().hash(visibilityFilter) ^
-      const DeepCollectionEquality().hash(isLoading);
+      const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(dataIsInitialized);
 
   @override
   _$TodosStateCopyWith<_TodosState> get copyWith =>
@@ -205,7 +227,8 @@ abstract class _TodosState implements TodosState {
   factory _TodosState(
       {@required KtMap<String, Todo> todos,
       @required VisibilityFilter visibilityFilter,
-      @required bool isLoading}) = _$_TodosState;
+      @required bool isLoading,
+      @required bool dataIsInitialized}) = _$_TodosState;
 
   @override
   KtMap<String, Todo> get todos;
@@ -213,6 +236,8 @@ abstract class _TodosState implements TodosState {
   VisibilityFilter get visibilityFilter;
   @override
   bool get isLoading;
+  @override // this is set updated every time we are in a process of loading data (to show spinner while loading)
+  bool get dataIsInitialized;
   @override
   _$TodosStateCopyWith<_TodosState> get copyWith;
 }

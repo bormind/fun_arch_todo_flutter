@@ -37,7 +37,7 @@ class FileStorage implements TodosRepository {
   }
 
   @override
-  Future<File> saveTodos(List<TodoEntity> todos) async {
+  Future<File> saveTodos(Iterable<TodoEntity> todos) async {
     final file = await _getLocalFile();
 
     return file.writeAsString(JsonEncoder().convert({

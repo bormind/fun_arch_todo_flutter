@@ -11,7 +11,10 @@ abstract class TodosState with _$TodosState {
   factory TodosState({
     @required KtMap<String, Todo> todos,
     @required VisibilityFilter visibilityFilter,
+    // this is set updated every time we are in a process of loading data (to show spinner while loading)
     @required bool isLoading,
+    // this is triggered when we initialized data first time (for exmple loaded from local storage)
+    @required bool dataIsInitialized,
   }) = _TodosState;
 
   @late
@@ -31,5 +34,6 @@ abstract class TodosState with _$TodosState {
         todos: KtLinkedMap.empty(),
         visibilityFilter: VisibilityFilter.all,
         isLoading: false,
+        dataIsInitialized: false,
       );
 }

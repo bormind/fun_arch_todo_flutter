@@ -1,5 +1,6 @@
 import 'package:fun_arch_todo_flutter/services/fetcher.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
+import 'package:fun_arch_todo_flutter/store/state_observer.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,4 +18,6 @@ void initServiceLocator() {
   ));
 
   getIt.registerSingleton<Fetcher>(Fetcher());
+
+  getIt.registerSingleton<StateObserver>(StateObserver());
 }

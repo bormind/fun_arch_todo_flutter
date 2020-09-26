@@ -30,10 +30,8 @@ abstract class Todo with _$Todo {
       id: entity.id ?? Uuid().v4(),
     );
   }
-}
 
-extension TodoX on Todo {
-  TodoEntity toEntity() {
-    return TodoEntity(this.task, this.id, this.note, this.completed);
+  static TodoEntity toEntity(Todo todo) {
+    return TodoEntity(todo.task, todo.id, todo.note, todo.completed);
   }
 }

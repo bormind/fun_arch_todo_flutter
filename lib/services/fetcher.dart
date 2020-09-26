@@ -9,7 +9,7 @@ class Fetcher {
   final AppStore _store = getIt<AppStore>();
   final TodosRepository _todoRepo = getIt<FileStorage>();
 
-  Future<void> loadTodos() {
+  Future<void> loadTodosFromLocalStorage() {
     _store.dispatch(SetLoading(true));
     return _todoRepo
         .loadTodos()
@@ -17,6 +17,7 @@ class Fetcher {
             _store.dispatch(SetTodos(entities.map(Todo.fromEntity))))
         .whenComplete(() {
       _store.dispatch(SetLoading(false));
+      _store.dispatch(SetDataInitialized());
     });
   }
 }

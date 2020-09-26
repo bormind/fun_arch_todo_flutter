@@ -18,6 +18,7 @@ class AppStore {
   }
 
   void dispatch(Action action) {
+    print(">> Dispatching ${action.runtimeType}");
     _stateSubject.add(action.updateState(_stateSubject.value));
   }
 }

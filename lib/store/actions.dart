@@ -141,3 +141,10 @@ class SetLoading implements Action {
     return appState.copyWith.todosState(isLoading: isLoading);
   }
 }
+
+class SetDataInitialized implements Action {
+  @override
+  AppState updateState(AppState appState) {
+    return appState.copyWith.todosState(dataIsInitialized: true);
+  }
+}
