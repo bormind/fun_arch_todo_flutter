@@ -1,18 +1,28 @@
 import 'package:flutter/foundation.dart';
-import 'package:fun_arch_todo_flutter/arch_samples/todo_entity.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:functional_data/functional_data.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
-part 'todo.freezed.dart';
+part 'todo.g.dart';
 
-@freezed
-abstract class Todo with _$Todo {
-  factory Todo({
-    @required String task,
-    @required String note,
-    @required String id,
-    @required bool completed,
-  }) = _Todo;
+@JsonSerializable()
+@FunctionalData()
+class Todo extends $Todo {
+  final String task;
+  final String note;
+  final String id;
+  final bool completed;
+
+  Todo({
+    @required String this.task,
+    @required String this.note,
+    @required String this.id,
+    @required bool this.completed,
+  });
+
+  Map<String, dynamic> toJson() => _$TodoToJson(this);
+
+  static Todo fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
   static Todo newTask(String task) {
     return Todo(task: task, note: '', id: Uuid().v4(), completed: false);
@@ -20,18 +30,5 @@ abstract class Todo with _$Todo {
 
   static Todo newTote(String task, String note) {
     return Todo(task: task, note: note, id: Uuid().v4(), completed: false);
-  }
-
-  static Todo fromEntity(TodoEntity entity) {
-    return Todo(
-      task: entity.task,
-      completed: entity.complete ?? false,
-      note: entity.note,
-      id: entity.id ?? Uuid().v4(),
-    );
-  }
-
-  static TodoEntity toEntity(Todo todo) {
-    return TodoEntity(todo.task, todo.id, todo.note, todo.completed);
   }
 }
