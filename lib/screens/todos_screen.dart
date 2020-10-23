@@ -36,7 +36,7 @@ class TodosScreen extends StatelessWidget {
                 todo: todo,
                 onDismissed: (direction) {
                   _store.dispatch(DeleteTodo(todo.id));
-                  Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(DeleteTodoSnackBar(
                     todo: todo,
                     onUndo: () => _store.dispatch(AddTodo(todo)),
                   ));
@@ -47,7 +47,8 @@ class TodosScreen extends StatelessWidget {
                   );
 
                   if (removedTodo != null) {
-                    Scaffold.of(context).showSnackBar(DeleteTodoSnackBar(
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(DeleteTodoSnackBar(
                       todo: todo,
                       onUndo: () => _store.dispatch(AddTodo(todo)),
                     ));

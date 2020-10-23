@@ -1,12 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/boris1/Development/flutter"
+export "FLUTTER_ROOT=/Users/boris1/fvm/versions/master"
 export "FLUTTER_APPLICATION_PATH=/Users/boris1/Development/flutter_code/fun_arch_todo_flutter"
 export "FLUTTER_TARGET=/Users/boris1/Development/flutter_code/fun_arch_todo_flutter/lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
 export "OTHER_LDFLAGS=$(inherited) -framework Flutter"
-export "FLUTTER_FRAMEWORK_DIR=/Users/boris1/Development/flutter/bin/cache/artifacts/engine/ios"
+export "FLUTTER_FRAMEWORK_DIR=/Users/boris1/fvm/versions/master/bin/cache/artifacts/engine/ios"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"
 export "DART_DEFINES=flutter.inspector.structuredErrors%3Dtrue"
