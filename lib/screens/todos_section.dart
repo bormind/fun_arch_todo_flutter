@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/screens/details_screen.dart';
 import 'package:fun_arch_todo_flutter/service_locator.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/actions/todo_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
@@ -11,10 +11,10 @@ import 'package:fun_arch_todo_flutter/widgets/delete_todo_snack_bar.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/widgets/todo_item.dart';
 
-class TodosScreen extends StatelessWidget {
+class TodosSection extends StatelessWidget {
   final _store = getIt<AppStore>();
 
-  TodosScreen();
+  TodosSection();
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
-class Stats extends StatelessWidget {
+class StatsSection extends StatelessWidget {
   Widget _renderStats(BuildContext context, TodosState todosState) {
     return Center(
       child: Column(

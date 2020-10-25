@@ -27,6 +27,8 @@ dependencies:
   json_annotation: ^3.1.0
   functional_data: ^0.3.0
 
+  sum_types: ^0.2.1+2
+
   kt_dart: ^0.8.0
 
   cupertino_icons: ^1.0.0
@@ -50,6 +52,7 @@ dev_dependencies:
 #  freezed: ^0.12.2
   json_serializable: ^3.5.0
   functional_data_generator: ^0.3.4
+  sum_types_generator: ^0.2.1+2
 
 flutter:
 

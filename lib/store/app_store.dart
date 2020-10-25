@@ -1,7 +1,6 @@
 import 'package:fun_arch_todo_flutter/models/app_state.dart';
+import 'package:fun_arch_todo_flutter/store/actions/action.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'actions.dart';
 
 class AppStore {
   final BehaviorSubject<AppState> _stateSubject;

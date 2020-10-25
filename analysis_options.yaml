@@ -1,4 +1,22 @@
 analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: true
+  errors:
+    todo: warning
+    missing_return: error
+    dead_code: warning
+    invalid_assignment: error
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+
+linter:
+  rules:
+    - avoid_empty_else
+    - cancel_subscriptions
+    - close_sinks
+    - unnecessary_const
+    - unnecessary_new
+    - unrelated_type_equality_checks
+    - exhaustive_cases

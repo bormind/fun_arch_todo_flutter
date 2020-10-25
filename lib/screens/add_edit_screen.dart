@@ -3,16 +3,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:fun_arch_todo_flutter/service_locator.dart';
+import 'package:fun_arch_todo_flutter/store/actions/nav_actions.dart';
+import 'package:fun_arch_todo_flutter/store/actions/todo_actions.dart';
+import 'package:fun_arch_todo_flutter/store/app_store.dart';
+import 'package:fun_arch_todo_flutter/store/actions/action.dart' as Actions;
 
 typedef OnSaveCallback = Function(String task, String note);
 
 class AddEditScreen extends StatefulWidget {
   final Option<Todo> todo;
-  final OnSaveCallback onSave;
 
   AddEditScreen({
     @required this.todo,
-    @required this.onSave,
   });
 
   @override
@@ -21,6 +24,7 @@ class AddEditScreen extends StatefulWidget {
 
 class _AddEditScreenState extends State<AddEditScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _store = getIt<AppStore>();
 
   String _task;
   String _note;
@@ -33,6 +37,14 @@ class _AddEditScreenState extends State<AddEditScreen> {
     _note = widget.todo.map((t) => t.note).getOrElse(() => "");
 
     super.initState();
+  }
+
+  void _onSave(String task, String note) {
+    final Actions.Action action = widget.todo
+        .map<Actions.Action>((td) => UpdateTodo(td.id, task, note))
+        .getOrElse(() => AddTodo(Todo.newNote(task, note)));
+
+    _store.dispatch(action);
   }
 
   @override
@@ -82,8 +94,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            widget.onSave(_task, _note);
-            Navigator.pop(context);
+            _onSave(_task, _note);
+            _store.dispatch(PopNavTarget());
           }
         },
       ),

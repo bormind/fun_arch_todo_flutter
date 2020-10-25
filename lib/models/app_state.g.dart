@@ -14,22 +14,28 @@ abstract class $AppState {
   const $AppState();
   TodosState get todosState;
   AppTab get activeTab;
-  AppState copyWith({TodosState todosState, AppTab activeTab}) => AppState(
-      todosState: todosState ?? this.todosState,
-      activeTab: activeTab ?? this.activeTab);
+  NavState get navState;
+  AppState copyWith(
+          {TodosState todosState, AppTab activeTab, NavState navState}) =>
+      AppState(
+          todosState: todosState ?? this.todosState,
+          activeTab: activeTab ?? this.activeTab,
+          navState: navState ?? this.navState);
   @override
   String toString() =>
-      "AppState(todosState: $todosState, activeTab: $activeTab)";
+      "AppState(todosState: $todosState, activeTab: $activeTab, navState: $navState)";
   @override
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       todosState == other.todosState &&
-      activeTab == other.activeTab;
+      activeTab == other.activeTab &&
+      navState == other.navState;
   @override
   int get hashCode {
     var result = 17;
     result = 37 * result + todosState.hashCode;
     result = 37 * result + activeTab.hashCode;
+    result = 37 * result + navState.hashCode;
     return result;
   }
 }
@@ -39,4 +45,6 @@ class AppState$ {
       (s_, todosState) => s_.copyWith(todosState: todosState));
   static final activeTab = Lens<AppState, AppTab>((s_) => s_.activeTab,
       (s_, activeTab) => s_.copyWith(activeTab: activeTab));
+  static final navState = Lens<AppState, NavState>(
+      (s_) => s_.navState, (s_, navState) => s_.copyWith(navState: navState));
 }

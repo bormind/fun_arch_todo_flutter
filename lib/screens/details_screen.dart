@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/service_locator.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/actions/todo_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
@@ -68,9 +68,6 @@ class DetailsScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) {
           return AddEditScreen(
-            onSave: (task, note) {
-              _store.dispatch(UpdateTodo(todo.id, task, note));
-            },
             todo: Some(todo),
           );
         },

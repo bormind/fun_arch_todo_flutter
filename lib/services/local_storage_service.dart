@@ -16,7 +16,8 @@ class LocalStorageService {
       if (jsonList == null) {
         return [];
       } else {
-        return (jsonList as List<Map<String, dynamic>>)
+        return (jsonList as List<dynamic>)
+            .map((item) => item as Map<String, dynamic>)
             .map((item) => Todo.fromJson(item))
             .toList();
       }

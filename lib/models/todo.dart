@@ -28,7 +28,7 @@ class Todo extends $Todo {
     return Todo(task: task, note: '', id: Uuid().v4(), completed: false);
   }
 
-  static Todo newTote(String task, String note) {
+  static Todo newNote(String task, String note) {
     return Todo(task: task, note: note, id: Uuid().v4(), completed: false);
   }
 }

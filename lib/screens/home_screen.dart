@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:fun_arch_todo_flutter/arch_samples/routes.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
-import 'package:fun_arch_todo_flutter/screens/todos_screen.dart';
+import 'package:fun_arch_todo_flutter/navigation/nav_target.dart';
+import 'package:fun_arch_todo_flutter/screens/stats_section.dart';
+import 'package:fun_arch_todo_flutter/screens/todos_section.dart';
 import 'package:fun_arch_todo_flutter/service_locator.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/actions/home_actions.dart';
+import 'package:fun_arch_todo_flutter/store/actions/nav_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/extra_actions.dart';
 import 'package:fun_arch_todo_flutter/widgets/filter_button.dart';
-import 'package:fun_arch_todo_flutter/widgets/stats.dart';
 import 'package:fun_arch_todo_flutter/widgets/tab_selector.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
@@ -31,10 +32,10 @@ class HomeScreen extends StatelessWidget {
               ExtraActions(),
             ],
           ),
-          body: activeTab == AppTab.todos ? TodosScreen() : Stats(),
+          body: activeTab == AppTab.todos ? TodosSection() : StatsSection(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.pushNamed(context, ArchSampleRoutes.addTodo);
+              _store.dispatch(SetNavTarget(NavAddTodo()));
             },
             child: Icon(Icons.add),
             tooltip: "Add Todo",
