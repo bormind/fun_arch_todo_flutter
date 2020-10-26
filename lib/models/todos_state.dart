@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart' hide Lens;
 import 'package:functional_data/functional_data.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:meta/meta.dart';
@@ -38,4 +39,6 @@ class TodosState extends $TodosState {
         isLoading: false,
         dataIsInitialized: false,
       );
+
+  Option<Todo> findById(String id) => optionOf(todos.get(id));
 }

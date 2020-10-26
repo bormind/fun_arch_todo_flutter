@@ -13,6 +13,7 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    print("Rendering AppShell");
     return MaterialApp.router(
       title: '"Todo Starter"',
       routerDelegate: _routerDelegate,

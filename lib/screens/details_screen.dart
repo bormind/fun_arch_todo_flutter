@@ -1,9 +1,9 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fun_arch_todo_flutter/models/todo.dart';
-import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
+import 'package:fun_arch_todo_flutter/navigation/nav_target.dart';
 import 'package:fun_arch_todo_flutter/service_locator.dart';
+import 'package:fun_arch_todo_flutter/store/actions/nav_actions.dart';
 import 'package:fun_arch_todo_flutter/store/actions/todo_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
@@ -63,41 +63,31 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  void _onEditTodo(BuildContext context, Todo todo) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return AddEditScreen(
-            todo: Some(todo),
-          );
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ConnectState<Todo>(
       map: (state) => state.todosState.todos[todoId],
       where: notIdentical,
       builder: (todo) => Scaffold(
-          appBar: AppBar(
-            title: Text('Todo Details'),
-            actions: [
-              IconButton(
-                  tooltip: 'Delete Todo',
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _store.dispatch(DeleteTodo(todo.id));
-                    Navigator.pop(context, todo);
-                  })
-            ],
-          ),
-          body: _renderDetails(context, todo),
-          floatingActionButton: FloatingActionButton(
-              tooltip: 'Edit Todo',
-              child: Icon(Icons.edit),
-              onPressed: () => this._onEditTodo(context, todo))),
+        appBar: AppBar(
+          title: Text('Todo Details'),
+          actions: [
+            IconButton(
+                tooltip: 'Delete Todo',
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  _store.dispatch(DeleteTodo(todo.id));
+                  Navigator.pop(context, todo);
+                })
+          ],
+        ),
+        body: _renderDetails(context, todo),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Edit Todo',
+          child: Icon(Icons.edit),
+          onPressed: () => _store.dispatch(SetNavTarget(NavEditTodo(todoId))),
+        ),
+      ),
     );
   }
 }

@@ -14,9 +14,9 @@ typedef OnSaveCallback = Function(String task, String note);
 class AddEditScreen extends StatefulWidget {
   final Option<Todo> todo;
 
-  AddEditScreen({
-    @required this.todo,
-  });
+  AddEditScreen(
+    this.todo,
+  );
 
   @override
   _AddEditScreenState createState() => _AddEditScreenState();

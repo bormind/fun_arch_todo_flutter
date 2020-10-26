@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
+import 'package:fun_arch_todo_flutter/navigation/nav_target.dart';
 import 'package:fun_arch_todo_flutter/screens/details_screen.dart';
 import 'package:fun_arch_todo_flutter/service_locator.dart';
+import 'package:fun_arch_todo_flutter/store/actions/nav_actions.dart';
 import 'package:fun_arch_todo_flutter/store/actions/todo_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
@@ -42,17 +44,7 @@ class TodosSection extends StatelessWidget {
                   ));
                 },
                 onTap: () async {
-                  final removedTodo = await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => DetailsScreen(todo.id)),
-                  );
-
-                  if (removedTodo != null) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(DeleteTodoSnackBar(
-                      todo: todo,
-                      onUndo: () => _store.dispatch(AddTodo(todo)),
-                    ));
-                  }
+                  _store.dispatch(SetNavTarget(NavDetails(todo.id)));
                 },
                 onCheckboxChanged: (_) {
                   _store.dispatch(MarkCompletion(todo.id, !todo.completed));

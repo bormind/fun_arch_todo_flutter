@@ -3,9 +3,11 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/store/actions/action.dart';
 import 'package:fun_arch_todo_flutter/utils/map_extensions.dart';
+import 'package:functional_data/functional_data.dart';
 import 'package:kt_dart/kt.dart';
 
-final _todoListLens = AppState$.todosState.then(TodosState$.todos);
+final Lens<AppState, KtMap<String, Todo>> _todoListLens =
+    AppState$.todosState.then(TodosState$.todos);
 
 class MarkCompletion implements Action {
   final String todoId;
