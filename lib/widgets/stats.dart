@@ -4,7 +4,6 @@ import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
-import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class Stats extends StatelessWidget {
   Widget _renderStats(BuildContext context, TodosState todosState) {
@@ -49,7 +48,6 @@ class Stats extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectState<TodosState>(
       map: (state) => state.todosState,
-      where: notIdentical,
       builder: (todosState) {
         return todosState.isLoading
             ? LoadingIndicator(key: FlutterTodosKeys.statsLoadingIndicator)

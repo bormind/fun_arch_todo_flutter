@@ -20,7 +20,9 @@ class StateObserver {
         .skipUntil(datInitialized$)
         .listen((todos) {
       print("Saving to local storage");
-      localStore.saveTodos(todos.values.iter);
+      localStore
+          .saveTodos(todos.values.iter)
+          .catchError((error) => print("Error saving to local storage $error"));
     });
   }
 

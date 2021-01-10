@@ -13,21 +13,19 @@ class ConnectState<T> extends StatelessWidget {
   ConnectState({
     Key key,
     @required this.map,
-    @required this.where,
+    this.where,
     @required this.builder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
-      stream: _store.state$
-          .map(map)
-          .distinct((T prev, T next) => !where(prev, next)),
+      stream: _store.state$.map(map).distinct((T prev, T next) =>
+          where != null ? !where(prev, next) : identical(prev, next)),
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return Container();
         }
-
         return builder(snapshot.data);
       },
     );

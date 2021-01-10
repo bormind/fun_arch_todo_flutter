@@ -1,5 +1,5 @@
-import 'package:localstorage/localstorage.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
+import 'package:localstorage/localstorage.dart';
 
 final _APP_KEY = 'todo_app';
 final _TODOS_KEY = 'todos';
@@ -16,7 +16,8 @@ class LocalStorageService {
       if (jsonList == null) {
         return [];
       } else {
-        return (jsonList as List<Map<String, dynamic>>)
+        print(jsonList);
+        return (jsonList as List<dynamic>)
             .map((item) => Todo.fromJson(item))
             .toList();
       }

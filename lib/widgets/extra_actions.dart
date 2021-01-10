@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/extra_action.dart';
@@ -8,7 +8,6 @@ import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:kt_dart/kt.dart';
 
 class ExtraActions extends StatelessWidget {
@@ -20,7 +19,6 @@ class ExtraActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectState<KtMap<String, Todo>>(
         map: (state) => state.todosState.todos,
-        where: notIdentical,
         builder: (todos) {
           if (todos.isEmpty()) {
             return Container(key: FlutterTodosKeys.extraActionsEmptyContainer);

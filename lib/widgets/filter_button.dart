@@ -5,7 +5,6 @@ import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:fun_arch_todo_flutter/utils/utils.dart';
 
 class FilterButton extends StatelessWidget {
   final _store = getIt<AppStore>();
@@ -17,7 +16,6 @@ class FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectState<TodosState>(
       map: (state) => state.todosState,
-      where: notEqual,
       builder: (todosState) {
         final defaultStyle = Theme.of(context).textTheme.bodyText1;
         final activeStyle = Theme.of(context)
@@ -93,7 +91,12 @@ class _Button extends StatelessWidget {
           ),
         ),
       ],
-      icon: Icon(Icons.filter_list),
+      icon: Icon(
+        Icons.filter_list,
+        color: activeFilter == VisibilityFilter.all
+            ? defaultStyle.color
+            : activeStyle.color,
+      ),
     );
   }
 }

@@ -6,7 +6,6 @@ import 'package:fun_arch_todo_flutter/service_locator.dart';
 import 'package:fun_arch_todo_flutter/store/actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
-import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:fun_arch_todo_flutter/widgets/delete_todo_snack_bar.dart';
 import 'package:fun_arch_todo_flutter/widgets/loading_indicator.dart';
 import 'package:fun_arch_todo_flutter/widgets/todo_item.dart';
@@ -20,7 +19,6 @@ class TodosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectState<TodosState>(
         map: (state) => state.todosState,
-        where: notIdentical,
         builder: (todosState) {
           print("Rendering Todos List");
 
