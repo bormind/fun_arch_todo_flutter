@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/screens/todos_screen.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/widgets/extra_actions.dart';
 import 'package:fun_arch_todo_flutter/widgets/filter_button.dart';

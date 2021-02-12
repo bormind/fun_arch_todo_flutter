@@ -5,7 +5,7 @@ import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 
-abstract class Action {
+abstract class MyAction {
   AppState updateState(AppState appState);
 }
 
@@ -35,7 +35,7 @@ AppState _updateSingleTodo(
       appState, (todos) => todos..[todoId] = update(todos[todoId]));
 }
 
-class MarkCompletion implements Action {
+class MarkCompletion implements MyAction {
   final String todoId;
   final bool isCompleted;
 
@@ -51,7 +51,7 @@ class MarkCompletion implements Action {
   }
 }
 
-class DeleteTodo implements Action {
+class DeleteTodo implements MyAction {
   final String todoId;
 
   DeleteTodo(this.todoId);
@@ -64,7 +64,7 @@ class DeleteTodo implements Action {
   }
 }
 
-class UpdateTodo implements Action {
+class UpdateTodo implements MyAction {
   final String todoId;
   final String task;
   final String notes;
@@ -81,7 +81,7 @@ class UpdateTodo implements Action {
   }
 }
 
-class SetActiveTab implements Action {
+class SetActiveTab implements MyAction {
   final AppTab activeTab;
 
   SetActiveTab(this.activeTab);
@@ -92,7 +92,7 @@ class SetActiveTab implements Action {
   }
 }
 
-class SetVisibilityFilter implements Action {
+class SetVisibilityFilter implements MyAction {
   final VisibilityFilter visibilityFilter;
 
   SetVisibilityFilter(this.visibilityFilter);
@@ -110,7 +110,7 @@ class SetVisibilityFilter implements Action {
   }
 }
 
-class ClearCompleted implements Action {
+class ClearCompleted implements MyAction {
   @override
   AppState updateState(AppState appState) {
     return _updateTodos(appState, (todos) {
@@ -119,7 +119,7 @@ class ClearCompleted implements Action {
   }
 }
 
-class CompleteAll implements Action {
+class CompleteAll implements MyAction {
   @override
   AppState updateState(AppState appState) {
     return _updateTodos(appState, (todos) {
@@ -128,7 +128,7 @@ class CompleteAll implements Action {
   }
 }
 
-class UnCompleteAll implements Action {
+class UnCompleteAll implements MyAction {
   @override
   AppState updateState(AppState appState) {
     return _updateTodos(appState, (todos) {
@@ -137,7 +137,7 @@ class UnCompleteAll implements Action {
   }
 }
 
-class AddTodo implements Action {
+class AddTodo implements MyAction {
   final Todo todo;
 
   AddTodo(this.todo);
@@ -150,7 +150,7 @@ class AddTodo implements Action {
   }
 }
 
-class SelectTodo implements Action {
+class SelectTodo implements MyAction {
   final String todoId;
 
   SelectTodo(this.todoId);
@@ -164,7 +164,7 @@ class SelectTodo implements Action {
   }
 }
 
-class ClearSelection implements Action {
+class ClearSelection implements MyAction {
   @override
   AppState updateState(AppState appState) {
     return _updateTodoState(
@@ -174,7 +174,7 @@ class ClearSelection implements Action {
   }
 }
 
-class SetTodos implements Action {
+class SetTodos implements MyAction {
   final Iterable<Todo> list;
 
   SetTodos(this.list);

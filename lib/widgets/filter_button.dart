@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:todos_app_core/todos_app_core.dart';

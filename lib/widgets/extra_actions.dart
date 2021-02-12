@@ -5,7 +5,7 @@ import 'package:fun_arch_todo_flutter/env.dart';
 import 'package:fun_arch_todo_flutter/flutter_todos_keys.dart';
 import 'package:fun_arch_todo_flutter/models/extra_action.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:todos_app_core/todos_app_core.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/store/app_store.dart';
 import 'package:todos_repository_simple/todos_repository_simple.dart';
 

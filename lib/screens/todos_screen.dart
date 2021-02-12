@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
 import 'package:fun_arch_todo_flutter/screens/details_screen.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/store/connect_state.dart';
 import 'package:fun_arch_todo_flutter/utils/utils.dart';
 import 'package:fun_arch_todo_flutter/widgets/delete_todo_snack_bar.dart';

@@ -4,7 +4,7 @@ import 'package:fun_arch_todo_flutter/localization.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
 import 'package:fun_arch_todo_flutter/screens/home_screen.dart';
-import 'package:fun_arch_todo_flutter/store/actions.dart';
+import 'package:fun_arch_todo_flutter/store/my_actions.dart';
 import 'package:fun_arch_todo_flutter/utils/maybe.dart';
 import 'package:todos_app_core/todos_app_core.dart';
 
