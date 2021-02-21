@@ -17,7 +17,7 @@ class AppStore {
     return _stateSubject;
   }
 
-  void dispatch(Action action) {
+  void dispatch(AppAction action) {
     print("Action: ${action.runtimeType}");
     _stateSubject.add(action.updateState(_stateSubject.value));
   }

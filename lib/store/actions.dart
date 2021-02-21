@@ -2,20 +2,19 @@ import 'package:fun_arch_todo_flutter/models/app_state.dart';
 import 'package:fun_arch_todo_flutter/models/app_tab.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/models/todos_state.dart';
-
 import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
 import 'package:fun_arch_todo_flutter/utils/map_extensions.dart';
 import 'package:kt_dart/kt.dart';
 
 typedef AppState UpdateState(AppState appState);
 
-abstract class Action {
+abstract class AppAction {
   AppState updateState(AppState appState);
 }
 
 final _todoListLens = AppState$.todosState.then(TodosState$.todos);
 
-class MarkCompletion implements Action {
+class MarkCompletion implements AppAction {
   final String todoId;
   final bool isCompleted;
 
@@ -28,7 +27,7 @@ class MarkCompletion implements Action {
   }
 }
 
-class DeleteTodo implements Action {
+class DeleteTodo implements AppAction {
   final String todoId;
 
   DeleteTodo(this.todoId);
@@ -40,7 +39,7 @@ class DeleteTodo implements Action {
   }
 }
 
-class UpdateTodo implements Action {
+class UpdateTodo implements AppAction {
   final String todoId;
   final String task;
   final String notes;
@@ -54,7 +53,7 @@ class UpdateTodo implements Action {
   }
 }
 
-class SetActiveTab implements Action {
+class SetActiveTab implements AppAction {
   final AppTab activeTab;
 
   SetActiveTab(this.activeTab);
@@ -65,7 +64,7 @@ class SetActiveTab implements Action {
   }
 }
 
-class SetVisibilityFilter implements Action {
+class SetVisibilityFilter implements AppAction {
   final VisibilityFilter visibilityFilter;
 
   SetVisibilityFilter(this.visibilityFilter);
@@ -82,7 +81,7 @@ class SetVisibilityFilter implements Action {
   }
 }
 
-class ClearCompleted implements Action {
+class ClearCompleted implements AppAction {
   @override
   AppState updateState(AppState appState) {
     return _todoListLens
@@ -91,7 +90,7 @@ class ClearCompleted implements Action {
   }
 }
 
-class CompleteAll implements Action {
+class CompleteAll implements AppAction {
   @override
   AppState updateState(AppState appState) {
     return _todoListLens.of(appState).map((todos) =>
@@ -99,7 +98,7 @@ class CompleteAll implements Action {
   }
 }
 
-class UnCompleteAll implements Action {
+class UnCompleteAll implements AppAction {
   @override
   AppState updateState(AppState appState) {
     return _todoListLens.of(appState).map((todos) =>
@@ -107,7 +106,7 @@ class UnCompleteAll implements Action {
   }
 }
 
-class AddTodo implements Action {
+class AddTodo implements AppAction {
   final Todo todo;
 
   AddTodo(this.todo);
@@ -118,7 +117,7 @@ class AddTodo implements Action {
   }
 }
 
-class SetTodos implements Action {
+class SetTodos implements AppAction {
   final Iterable<Todo> list;
 
   SetTodos(this.list);
@@ -130,7 +129,7 @@ class SetTodos implements Action {
   }
 }
 
-class SetLoading implements Action {
+class SetLoading implements AppAction {
   final bool isLoading;
 
   SetLoading(this.isLoading);
@@ -143,7 +142,7 @@ class SetLoading implements Action {
   }
 }
 
-class SetDataInitialized implements Action {
+class SetDataInitialized implements AppAction {
   @override
   AppState updateState(AppState appState) {
     return AppState$.todosState
