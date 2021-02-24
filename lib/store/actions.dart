@@ -6,8 +6,6 @@ import 'package:fun_arch_todo_flutter/models/visibility_filter.dart';
 import 'package:fun_arch_todo_flutter/utils/map_extensions.dart';
 import 'package:kt_dart/kt.dart';
 
-typedef AppState UpdateState(AppState appState);
-
 abstract class AppAction {
   AppState updateState(AppState appState);
 }
@@ -142,11 +140,10 @@ class SetLoading implements AppAction {
   }
 }
 
-class SetDataInitialized implements AppAction {
+class SetLoadedFromStorage implements AppAction {
   @override
   AppState updateState(AppState appState) {
-    return AppState$.todosState
-        .of(appState)
-        .map((todosState) => todosState.copyWith(dataIsInitialized: true));
+    return AppState$.todosState.of(appState).map(
+        (todosState) => todosState.copyWith(initializedFromLocalStorage: true));
   }
 }

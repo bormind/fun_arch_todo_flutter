@@ -10,7 +10,7 @@ class StateObserver {
     final localStore = getIt<LocalStorageService>();
 
     final datInitialized$ = _store.state$
-        .map((state) => state.todosState.dataIsInitialized)
+        .map((state) => state.todosState.initializedFromLocalStorage)
         .distinct()
         .where((event) => event);
 

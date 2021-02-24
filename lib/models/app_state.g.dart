@@ -21,7 +21,8 @@ abstract class $AppState {
   String toString() =>
       "AppState(todosState: $todosState, activeTab: $activeTab)";
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
+      other is AppState &&
       other.runtimeType == runtimeType &&
       todosState == other.todosState &&
       activeTab == other.activeTab;

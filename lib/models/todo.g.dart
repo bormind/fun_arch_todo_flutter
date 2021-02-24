@@ -25,7 +25,8 @@ abstract class $Todo {
   String toString() =>
       "Todo(task: $task, note: $note, id: $id, completed: $completed)";
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
+      other is Todo &&
       other.runtimeType == runtimeType &&
       task == other.task &&
       note == other.note &&

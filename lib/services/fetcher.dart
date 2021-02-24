@@ -14,7 +14,7 @@ class Fetcher {
         .then((todos) => _store.dispatch(SetTodos(todos)))
         .whenComplete(() {
       _store.dispatch(SetLoading(false));
-      _store.dispatch(SetDataInitialized());
+      _store.dispatch(SetLoadedFromStorage());
     });
   }
 }

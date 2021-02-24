@@ -15,34 +15,36 @@ abstract class $TodosState {
   KtMap<String, Todo> get todos;
   VisibilityFilter get visibilityFilter;
   bool get isLoading;
-  bool get dataIsInitialized;
+  bool get initializedFromLocalStorage;
   TodosState copyWith(
           {KtMap<String, Todo> todos,
           VisibilityFilter visibilityFilter,
           bool isLoading,
-          bool dataIsInitialized}) =>
+          bool initializedFromLocalStorage}) =>
       TodosState(
           todos: todos ?? this.todos,
           visibilityFilter: visibilityFilter ?? this.visibilityFilter,
           isLoading: isLoading ?? this.isLoading,
-          dataIsInitialized: dataIsInitialized ?? this.dataIsInitialized);
+          initializedFromLocalStorage:
+              initializedFromLocalStorage ?? this.initializedFromLocalStorage);
   @override
   String toString() =>
-      "TodosState(todos: $todos, visibilityFilter: $visibilityFilter, isLoading: $isLoading, dataIsInitialized: $dataIsInitialized)";
+      "TodosState(todos: $todos, visibilityFilter: $visibilityFilter, isLoading: $isLoading, initializedFromLocalStorage: $initializedFromLocalStorage)";
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
+      other is TodosState &&
       other.runtimeType == runtimeType &&
       todos == other.todos &&
       visibilityFilter == other.visibilityFilter &&
       isLoading == other.isLoading &&
-      dataIsInitialized == other.dataIsInitialized;
+      initializedFromLocalStorage == other.initializedFromLocalStorage;
   @override
   int get hashCode {
     var result = 17;
     result = 37 * result + todos.hashCode;
     result = 37 * result + visibilityFilter.hashCode;
     result = 37 * result + isLoading.hashCode;
-    result = 37 * result + dataIsInitialized.hashCode;
+    result = 37 * result + initializedFromLocalStorage.hashCode;
     return result;
   }
 }
@@ -56,8 +58,8 @@ class TodosState$ {
           s_.copyWith(visibilityFilter: visibilityFilter));
   static final isLoading = Lens<TodosState, bool>((s_) => s_.isLoading,
       (s_, isLoading) => s_.copyWith(isLoading: isLoading));
-  static final dataIsInitialized = Lens<TodosState, bool>(
-      (s_) => s_.dataIsInitialized,
-      (s_, dataIsInitialized) =>
-          s_.copyWith(dataIsInitialized: dataIsInitialized));
+  static final initializedFromLocalStorage = Lens<TodosState, bool>(
+      (s_) => s_.initializedFromLocalStorage,
+      (s_, initializedFromLocalStorage) => s_.copyWith(
+          initializedFromLocalStorage: initializedFromLocalStorage));
 }
