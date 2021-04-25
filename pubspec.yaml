@@ -17,27 +17,26 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  equatable:
+  equatable: ^2.0.0
   flutter:
     sdk: flutter
 
-  dartz:
+  dartz: ^0.10.0-nullsafety.1
 
-#  freezed_annotation: ^0.12.0
-  json_annotation:
-  functional_data:
+  json_annotation: ^4.0.1
+  functional_data: ^1.0.0
 
-  kt_dart:
+  kt_dart: ^0.9.0
 
-  cupertino_icons:
+  cupertino_icons: ^1.0.2
 
-  uuid:
+  uuid: ^3.0.4
 
-  rxdart:
+  rxdart: ^0.26.0
 
-  get_it:
+  get_it: ^6.1.1
 
-  localstorage:
+  localstorage: ^4.0.0+1
 
 
 dev_dependencies:
@@ -48,10 +47,16 @@ dev_dependencies:
 
 # to run code builder:
 # flutter pub run build_runner build --delete-conflicting-outputs
-  build_runner:
+  build_runner: ^1.10.0
 #  freezed: ^0.12.2
-  json_serializable:
-  functional_data_generator:
+#  json_serializable:
+#  functional_data_generator:
+
+  json_serializable: ^4.0.3
+  functional_data_generator: ^1.0.0
+
+#  dependency_overrides:
+
 
 flutter:
 
