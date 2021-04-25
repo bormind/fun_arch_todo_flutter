@@ -16,11 +16,12 @@ abstract class $Todo {
   String get note;
   String get id;
   bool get completed;
-  Todo copyWith({String task, String note, String id, bool completed}) => Todo(
-      task: task ?? this.task,
-      note: note ?? this.note,
-      id: id ?? this.id,
-      completed: completed ?? this.completed);
+  Todo copyWith({String? task, String? note, String? id, bool? completed}) =>
+      Todo(
+          task: task ?? this.task,
+          note: note ?? this.note,
+          id: id ?? this.id,
+          completed: completed ?? this.completed);
   @override
   String toString() =>
       "Todo(task: $task, note: $note, id: $id, completed: $completed)";

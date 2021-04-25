@@ -10,18 +10,19 @@ class FilterButton extends StatelessWidget {
   final _store = getIt<AppStore>();
   final bool visible;
 
-  FilterButton({this.visible, Key key}) : super(key: key);
+  FilterButton({this.visible = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ConnectState<TodosState>(
       map: (state) => state.todosState,
       builder: (todosState) {
-        final defaultStyle = Theme.of(context).textTheme.bodyText1;
+        final defaultStyle = Theme.of(context).textTheme.bodyText1 ??
+            TextStyle(color: Colors.grey[800]);
         final activeStyle = Theme.of(context)
             .textTheme
             .bodyText1
-            .copyWith(color: Theme.of(context).accentColor);
+            ?.copyWith(color: Theme.of(context).accentColor);
 
         final button = _Button(
           onSelected: (filter) {
@@ -30,7 +31,7 @@ class FilterButton extends StatelessWidget {
           activeFilter: !todosState.isLoading
               ? todosState.visibilityFilter
               : VisibilityFilter.all,
-          activeStyle: activeStyle,
+          activeStyle: activeStyle ?? defaultStyle,
           defaultStyle: defaultStyle,
         );
         return AnimatedOpacity(
@@ -44,18 +45,18 @@ class FilterButton extends StatelessWidget {
 }
 
 class _Button extends StatelessWidget {
-  const _Button({
-    Key key,
-    @required this.onSelected,
-    @required this.activeFilter,
-    @required this.activeStyle,
-    @required this.defaultStyle,
-  }) : super(key: key);
-
   final PopupMenuItemSelected<VisibilityFilter> onSelected;
   final VisibilityFilter activeFilter;
   final TextStyle activeStyle;
   final TextStyle defaultStyle;
+
+  const _Button({
+    Key? key,
+    required this.onSelected,
+    required this.activeFilter,
+    required this.activeStyle,
+    required this.defaultStyle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -17,10 +17,10 @@ abstract class $TodosState {
   bool get isLoading;
   bool get initializedFromLocalStorage;
   TodosState copyWith(
-          {KtMap<String, Todo> todos,
-          VisibilityFilter visibilityFilter,
-          bool isLoading,
-          bool initializedFromLocalStorage}) =>
+          {KtMap<String, Todo>? todos,
+          VisibilityFilter? visibilityFilter,
+          bool? isLoading,
+          bool? initializedFromLocalStorage}) =>
       TodosState(
           todos: todos ?? this.todos,
           visibilityFilter: visibilityFilter ?? this.visibilityFilter,

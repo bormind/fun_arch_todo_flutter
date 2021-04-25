@@ -78,26 +78,30 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectState<Todo>(
+    return ConnectState<Todo?>(
       map: (state) => state.todosState.todos[todoId],
-      builder: (todo) => Scaffold(
-          appBar: AppBar(
-            title: Text('Todo Details'),
-            actions: [
-              IconButton(
-                  tooltip: 'Delete Todo',
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    _store.dispatch(DeleteTodo(todo.id));
-                    Navigator.pop(context, todo);
-                  })
-            ],
-          ),
-          body: _renderDetails(context, todo),
-          floatingActionButton: FloatingActionButton(
-              tooltip: 'Edit Todo',
-              child: Icon(Icons.edit),
-              onPressed: () => this._onEditTodo(context, todo))),
+      builder: (todo) => todo == null
+          ? Center(
+              child: Text("No details found for todoId: $todoId"),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                title: Text('Todo Details'),
+                actions: [
+                  IconButton(
+                      tooltip: 'Delete Todo',
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        _store.dispatch(DeleteTodo(todo.id));
+                        Navigator.pop(context, todo);
+                      })
+                ],
+              ),
+              body: _renderDetails(context, todo),
+              floatingActionButton: FloatingActionButton(
+                  tooltip: 'Edit Todo',
+                  child: Icon(Icons.edit),
+                  onPressed: () => this._onEditTodo(context, todo))),
     );
   }
 }

@@ -14,10 +14,10 @@ class Todo extends $Todo {
   final bool completed;
 
   Todo({
-    @required String this.task,
-    @required String this.note,
-    @required String this.id,
-    @required bool this.completed,
+    required String this.task,
+    required String this.note,
+    required String this.id,
+    required bool this.completed,
   });
 
   Map<String, dynamic> toJson() => _$TodoToJson(this);

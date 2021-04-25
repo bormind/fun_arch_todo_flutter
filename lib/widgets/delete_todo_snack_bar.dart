@@ -3,9 +3,9 @@ import 'package:fun_arch_todo_flutter/models/todo.dart';
 
 class DeleteTodoSnackBar extends SnackBar {
   DeleteTodoSnackBar({
-    Key key,
-    @required Todo todo,
-    @required VoidCallback onUndo,
+    Key? key,
+    required Todo todo,
+    required VoidCallback onUndo,
   }) : super(
           key: key,
           content: Text(

@@ -12,11 +12,8 @@ extension KtMapExtensions<K, V> on KtMap<K, V> {
   }
 
   KtMap<K, V> update(K key, V update(V v)) {
-    if (!this.containsKey(key)) {
-      return this;
-    }
-
-    return put(key, update(this[key]));
+    final foundValue = this[key];
+    return foundValue == null ? this : put(key, update(foundValue));
   }
 
   KtMap<K, V> delete(K key) {

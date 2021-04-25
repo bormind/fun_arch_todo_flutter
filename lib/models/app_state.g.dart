@@ -14,7 +14,7 @@ abstract class $AppState {
   const $AppState();
   TodosState get todosState;
   AppTab get activeTab;
-  AppState copyWith({TodosState todosState, AppTab activeTab}) => AppState(
+  AppState copyWith({TodosState? todosState, AppTab? activeTab}) => AppState(
       todosState: todosState ?? this.todosState,
       activeTab: activeTab ?? this.activeTab);
   @override

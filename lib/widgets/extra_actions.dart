@@ -13,7 +13,7 @@ import 'package:kt_dart/kt.dart';
 class ExtraActions extends StatelessWidget {
   final _store = getIt<AppStore>();
 
-  ExtraActions({Key key}) : super();
+  ExtraActions({Key? key}) : super();
 
   @override
   Widget build(BuildContext context) {
