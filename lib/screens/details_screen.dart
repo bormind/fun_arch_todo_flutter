@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
 import 'package:fun_arch_todo_flutter/screens/add_edit_screen.dart';
@@ -69,7 +68,7 @@ class DetailsScreen extends StatelessWidget {
             onSave: (task, note) {
               _store.dispatch(UpdateTodo(todo.id, task, note));
             },
-            todo: Some(todo),
+            todo: todo,
           );
         },
       ),

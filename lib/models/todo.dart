@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:functional_data/functional_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';

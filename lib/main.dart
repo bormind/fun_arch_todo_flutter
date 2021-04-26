@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fun_arch_todo_flutter/localization.dart';
 import 'package:fun_arch_todo_flutter/models/todo.dart';
@@ -30,7 +29,7 @@ void main() {
         },
         ArchSampleRoutes.addTodo: (context) {
           return AddEditScreen(
-            todo: None(),
+            todo: null,
             onSave: (task, note) {
               getIt<AppStore>().dispatch(AddTodo(Todo.newTote(task, note)));
             },
